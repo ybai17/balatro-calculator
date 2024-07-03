@@ -1,3 +1,17 @@
+/**
+ * Defines the editions, enhancements, seals, and suits for the playing cards.
+ * 
+ * Playing cards can also have a number of special modifiers, of which there are 3 types:   
+ *  1). Editions (None, Foil, Holographic, Polychrome)
+ *  2). Enhancements (None, Bonus Card, Mult Card, Wild Card, Glass Card, Steel Card, Stone Card, Gold Card, Lucky Card)
+ *  3). Seals (None, Gold, Red, Blue, Purple)
+ * 
+ * Jokers can have edition types but not enhancements, seals, or suits.
+ * 
+ * Playing cards can only have one modifier of each type. Applying any edition, enhancement, or seal changes
+ * overrides the previous one of the same type if it exists.
+ */
+
 const EditionTypes = Object.freeze({
     NONE: 0,
     FOIL: 1,
