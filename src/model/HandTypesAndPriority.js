@@ -10,7 +10,7 @@
  * 
  */
 
-const TypesAndPriority = {
+const TypesAndPriority = Object.freeze({
     FLUSH_FIVE: 12,
     FLUSH_HOUSE: 11,
     FIVE_OF_A_KIND: 10,
@@ -23,6 +23,6 @@ const TypesAndPriority = {
     TWO_PAIR: 3,
     PAIR: 2,
     HIGH_CARD: 1,
-};
+});
 
 export default TypesAndPriority;
