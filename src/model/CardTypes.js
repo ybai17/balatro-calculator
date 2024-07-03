@@ -17,7 +17,7 @@ const EditionTypes = Object.freeze({
     FOIL: 1,
     HOLOGRAPHIC: 2,
     POLYCHROME: 3,
-    NEGATIVE: 4, //Jokers only
+    NEGATIVE: -1, //Jokers only
 });
 
 const EnhancementTypes = Object.freeze({
