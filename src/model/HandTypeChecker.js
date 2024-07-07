@@ -6,4 +6,8 @@
 
 import TypesAndScores from "./HandTypesAndBaseScores";
 import TypesAndPriority from "./HandTypesAndPriority";
+import PlayedHand from "./Hands/PlayedHandObject";
 
+function checkFlushFive(playedHand) {
+    
+}
