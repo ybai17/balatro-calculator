@@ -4,3 +4,6 @@
  * The Flush Five, Flush House, and Five of a Kind hands are secret hands unique to Balatro and not found in poker normally.
  */
 
+import TypesAndScores from "./HandTypesAndBaseScores";
+import TypesAndPriority from "./HandTypesAndPriority";
+

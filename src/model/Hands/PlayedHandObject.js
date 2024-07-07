@@ -1,0 +1,8 @@
+class PlayedHand {
+
+    
+
+    constructor(handCardsArray) {
+
+    }
+}
