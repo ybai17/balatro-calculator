@@ -7,55 +7,56 @@
 import TypesAndScores from "./HandTypesAndBaseScores";
 import TypesAndPriority from "./HandTypesAndPriority";
 import PlayedHand from "./Hands/PlayedHandObject";
+import JokerCards from "./JokerCards/JokerDefs";
 
-function checkHandType(playedHand) {
+function checkHandType(playedHand, jokers) {
 
-    if (isFlushFive(playedHand)) {
+    if (isFlushFive(playedHand, jokers)) {
         return TypesAndPriority.FLUSH_FIVE;
     }
 
-    if (isFlushHouse(playedHand)) {
+    if (isFlushHouse(playedHand, jokers)) {
         return TypesAndPriority.FLUSH_HOUSE;
     }
 
-    if (isFiveOfAKind(playedHand)) {
+    if (isFiveOfAKind(playedHand, jokers)) {
         return TypesAndPriority.FIVE_OF_A_KIND;
     }
 
-    if (isStraightFlush(playedHand)) {
+    if (isStraightFlush(playedHand, jokers)) {
         return TypesAndPriority.STRAIGHT_FLUSH;
     }
 
-    if (isFourOfAKind(playedHand)) {
+    if (isFourOfAKind(playedHand, jokers)) {
         return TypesAndPriority.FOUR_OF_A_KIND;
     }
 
-    if (isFullHouse(playedHand)) {
+    if (isFullHouse(playedHand, jokers)) {
         return TypesAndPriority.FULL_HOUSE;
     }
 
-    if (isFlush(playedHand)) {
+    if (isFlush(playedHand, jokers)) {
         return TypesAndPriority.FLUSH;
     }
 
-    if (isStraight(playedHand)) {
+    if (isStraight(playedHand, jokers)) {
         return TypesAndPriority.STRAIGHT;
     }
 
-    if (isThreeOfAKind(playedHand)) {
+    if (isThreeOfAKind(playedHand, jokers)) {
         return TypesAndPriority.THREE_OF_A_KIND;
     }
 
-    if (isTwoPair(playedHand)) {
+    if (isTwoPair(playedHand, jokers)) {
         return TypesAndPriority.TWO_PAIR;
     }
 
-    if (isPair(playedHand)) {
+    if (isPair(playedHand, jokers)) {
         return TypesAndPriority.PAIR;
     }
 }
 
-function isFlushFive(playedHand) {
+function isFlushFive(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
@@ -71,7 +72,7 @@ function isFlushFive(playedHand) {
     return false;
 }
 
-function isFlushHouse(playedHand) {
+function isFlushHouse(playedHand, jokers) {
     if (isFlush(playedHand) && isFullHouse(playedHand)) {
         return true;
     }
@@ -79,7 +80,7 @@ function isFlushHouse(playedHand) {
     return false;
 }
 
-function isFiveOfAKind(playedHand) {
+function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
@@ -95,7 +96,7 @@ function isFiveOfAKind(playedHand) {
     return false;
 }
 
-function isStraightFlush(playedHand) {
+function isStraightFlush(playedHand, jokers) {
     if (isStraight(playedHand) && isFlush(playedHand)) {
         return true;
     }
@@ -103,31 +104,35 @@ function isStraightFlush(playedHand) {
     return false;
 }
 
-function isFourOfAKind(playedHand) {
+function isFourOfAKind(playedHand, jokers) {
+    if (playedHand.size == 4 || playedHand.size == 5) {
+
+    }
+}
+
+function isFullHouse(playedHand, jokers) {
 
 }
 
-function isFullHouse(playedHand) {
+function isFlush(playedHand, jokers) {
+
+    if (jokers.includes())
 
 }
 
-function isFlush(playedHand) {
-    
-}
-
-function isStraight(playedHand) {
+function isStraight(playedHand, jokers) {
 
 }
 
-function isThreeOfAKind(playedHand) {
+function isThreeOfAKind(playedHand, jokers) {
 
 }
 
-function isTwoPair(playedHand) {
+function isTwoPair(playedHand, jokers) {
 
 }
 
-function isPair(playedHand) {
+function isPair(playedHand, jokers) {
 
 }
 
