@@ -9,6 +9,8 @@ import TypesAndPriority from "./HandTypesAndPriority";
 import PlayedHand from "./Hands/PlayedHandObject";
 import JokerCards from "./JokerCards/JokerDefs";
 
+
+
 function checkHandType(playedHand, jokers) {
 
     if (isFlushFive(playedHand, jokers)) {
@@ -116,7 +118,11 @@ function isFullHouse(playedHand, jokers) {
 
 function isFlush(playedHand, jokers) {
 
-    if (jokers.includes())
+    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+
+    }
+
+
 
 }
 

@@ -11,6 +11,8 @@
 
 class ScoreObject {
 
+    scoringCards = [];
+
     constructor(chips, multiplier) {
         this.chips = chips, this.multiplier = multiplier;
     }
