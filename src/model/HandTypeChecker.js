@@ -58,6 +58,12 @@ function checkHandType(playedHand, jokers) {
     }
 }
 
+//-----------------------------------------
+//The functions that do the checking. Need to return true or false, as well as a Hand object containing the scoring cards
+//-----------------------------------------
+
+
+
 function isFlushFive(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
