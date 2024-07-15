@@ -13,48 +13,52 @@ import JokerCards from "./JokerCards/JokerDefs";
 
 function checkHandType(playedHand, jokers) {
 
-    if (isFlushFive(playedHand, jokers)) {
-        return TypesAndPriority.FLUSH_FIVE;
+    let [isFlushFiveBool, flushFiveHand] = isFlushFive(playedHand, jokers);
+
+    if (isFlushFiveBool) {
+        return [TypesAndPriority.FLUSH_FIVE, hand];
     }
 
-    if (isFlushHouse(playedHand, jokers)) {
-        return TypesAndPriority.FLUSH_HOUSE;
+    let [isFlushHouseBool] = isFlushHouse(playedHand, jokers);
+
+    if (isFlushHouseBool) {
+        return [TypesAndPriority.FLUSH_HOUSE, flushHouseHand];
     }
 
-    if (isFiveOfAKind(playedHand, jokers)) {
+    if (isFiveOfAKind(playedHand, jokers)[0]) {
         return TypesAndPriority.FIVE_OF_A_KIND;
     }
 
-    if (isStraightFlush(playedHand, jokers)) {
+    if (isStraightFlush(playedHand, jokers)[0]) {
         return TypesAndPriority.STRAIGHT_FLUSH;
     }
 
-    if (isFourOfAKind(playedHand, jokers)) {
+    if (isFourOfAKind(playedHand, jokers)[0]) {
         return TypesAndPriority.FOUR_OF_A_KIND;
     }
 
-    if (isFullHouse(playedHand, jokers)) {
+    if (isFullHouse(playedHand, jokers)[0]) {
         return TypesAndPriority.FULL_HOUSE;
     }
 
-    if (isFlush(playedHand, jokers)) {
+    if (isFlush(playedHand, jokers)[0]) {
         return TypesAndPriority.FLUSH;
     }
 
-    if (isStraight(playedHand, jokers)) {
+    if (isStraight(playedHand, jokers)[0]) {
         return TypesAndPriority.STRAIGHT;
     }
 
-    if (isThreeOfAKind(playedHand, jokers)) {
+    if (isThreeOfAKind(playedHand, jokers)[0]) {
         return TypesAndPriority.THREE_OF_A_KIND;
     }
 
-    if (isTwoPair(playedHand, jokers)) {
+    if (isTwoPair(playedHand, jokers)[0]) {
         return TypesAndPriority.TWO_PAIR;
     }
 
-    if (isPair(playedHand, jokers)) {
-        return TypesAndPriority.PAIR;
+    if (isPair(playedHand, jokers)[0]) {
+        return [TypesAndPriority.PAIR, ];
     }
 }
 
