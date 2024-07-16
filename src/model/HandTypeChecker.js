@@ -4,6 +4,7 @@
  * The Flush Five, Flush House, and Five of a Kind hands are secret hands unique to Balatro and not found in poker normally.
  * 
  * TODO: Need to consider the fact that stone cards will always be counted for +50 chips and score.
+ * FOR NOW, ASSUME NO STONE CARDS
  */
 
 import TypesAndScores from "./HandTypesAndBaseScores";
@@ -165,6 +166,28 @@ function isFourOfAKind(playedHand, jokers) {
 function isFullHouse(playedHand, jokers) {
     if (playedHand.size === 5) {
 
+        let uniqueRanksAndCounts = {};
+
+        for (let i = 0; i < 5; i++) {
+            let curr = playedHand.cards[i];
+            if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
+                uniqueRanksAndCounts[curr.rank] = 1;
+            }
+            uniqueRanksAndCounts[curr.rank] += 1;
+        }
+
+        if (Object.keys(uniqueRanksAndCounts).length !== 2) {
+            return {isHand: false, scoringCards: []};
+        }
+
+        //here we can guarantee that there are only 2 ranks. Now we have to confirm it's a 3-2 distribution
+        //we cannot guarantee the order of the ranks stored in the differentRanks object
+        let [first, second] = Object.keys(uniqueRanksAndCounts);
+
+        if ((uniqueRanksAndCounts[first] === 3 && uniqueRanksAndCounts[second] === 2) ||
+            (uniqueRanksAndCounts[first] === 2 && uniqueRanksAndCounts[second] === 3)) {
+            return {isHand: true, scoringCards: playedHand.cards};
+        }
     }
 
     return {isHand: false, scoringCards: []};
