@@ -8,6 +8,7 @@ import TypesAndScores from "./HandTypesAndBaseScores";
 import TypesAndPriority from "./HandTypesAndPriority";
 import PlayedHand from "./Hands/PlayedHandObject";
 import JokerCards from "./JokerCards/JokerDefs";
+import PlayingCard from "./PlayingCard";
 
 function checkHandType(playedHand, jokers) {
 
@@ -23,7 +24,7 @@ function checkHandType(playedHand, jokers) {
             return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards};
         }
 
-    } else if (playedHand.sie === 3) {
+    } else if (playedHand.size === 3) {
         handCheck = isThreeOfAKind(playedHand, jokers);
         if (handCheck.isHand) {
             return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards};
@@ -45,6 +46,11 @@ function checkHandType(playedHand, jokers) {
         if (handCheck.isHand) {
             return {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards};
         }
+
+        handCheck = isFullHouse(playedHand, jokers);
+        if (handCheck.isHand) {
+            return {handType: TypesAndPriority.FULL_HOUSE, scoringCards: handCheck.scoringCards};
+        }
     }
     
     handCheck = isStraightFlush(playedHand, jokers);
@@ -55,11 +61,6 @@ function checkHandType(playedHand, jokers) {
     handCheck = isFourOfAKind(playedHand, jokers);
     if (handCheck.isHand) {
         return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
-    }
-
-    handCheck = isFullHouse(playedHand, jokers);
-    if (handCheck.isHand) {
-        return {handType: TypesAndPriority.FULL_HOUSE, scoringCards: handCheck.scoringCards};
     }
 
     handCheck = isFlush(playedHand, jokers);
@@ -88,7 +89,6 @@ function checkHandType(playedHand, jokers) {
     }
 
     handCheck = isHighCard(playedHand, jokers);
-
     return {handType: TypesAndPriority.HIGH_CARD, scoringCards: handCheck.scoringCards};
 }
 
@@ -101,8 +101,8 @@ function isFlushFive(playedHand, jokers) {
         let firstCard = playedHand.cards[0];
 
         for (let i = 1; i < 5; i++) {
-            if (firstCard.rank != playedHand.cards[i] || firstCard.suit != playedHand.cards[i]) {
-                return false;
+            if (firstCard.rank != playedHand.cards[i] || !firstCard.areSuitsEqual(playedHand.cards[i])) {
+                return {isHand: false, scoringCards: []};
             }
         }
 
@@ -113,17 +113,12 @@ function isFlushFive(playedHand, jokers) {
 }
 
 function isFlushHouse(playedHand, jokers) {
-    if (isFullHouse(playedHand, jokers)) {
 
-        let firstCard = playedHand.cards[0];
+    let fullHouseCheck = isFullHouse(playedHand, jokers);
+    if (fullHouseCheck.isHand) {
 
-        for (let i = 1; i < 5; i++) {
-            if (firstCard.suit != playedHand.cards[i]) {
-                return {isHand: false, scoringCards: []};
-            }
-        }
-
-        return {isHand: true, scoringCards: []};
+        let flushCheck = isFlush(playedHand, jokers);
+        return {isHand: flushCheck.isHand, scoringCards: flushCheck.scoringCards};
     }
 
     return {isHand: false, scoringCards: []};
@@ -146,38 +141,74 @@ function isFiveOfAKind(playedHand, jokers) {
 }
 
 function isStraightFlush(playedHand, jokers) {
-    if (isStraight(playedHand, jokers) && isFlush(playedHand, jokers)) {
-        return true;
+
+    let flushCheck = isFlush(playedHand, jokers);
+    if (flushCheck.isHand) {
+
+        let straightCheck = isStraight(flushCheck.scoringCards, jokers);
+        return {isHand: straightCheck.isHand, scoringCards: straightCheck.scoringCards};
     }
 
-    return false;
+    return {isHand: false, scoringCards: []};
 }
 
 function isFourOfAKind(playedHand, jokers) {
     if (playedHand.size == 4 || playedHand.size == 5) {
 
     }
+
+    return {isHand: false, scoringCards: []};
 }
 
 function isFullHouse(playedHand, jokers) {
+    if (playedHand.size === 5) {
 
+    }
+
+    return {isHand: false, scoringCards: []};
 }
 
 function isFlush(playedHand, jokers) {
 
-    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
-
+    if (playedHand.size !== 4 || playedHand.size !== 5) {
+        return {isHand: false, scoringCards: []};
     }
 
+    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+        
+        //todo: implement checking for a flush of 4 cards
 
+        return {isHand: false, scoringCards: []};
+    }
+
+    //normal check for a flush with 5 cards
+    for (let i = 0; i < playedHand.size - 1; i++) {
+        let curr = playedHand.cards[i];
+        let next = playedHand.cards[i + 1];
+
+        if (!curr.areSuitsEqual(next)) {
+            return {isHand: false, scoringCards: []};
+        }
+    }
+
+    return {isHand: true, scoringCards: playedHand.cards};
 
 }
 
 function isStraight(playedHand, jokers) {
 
-    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
-
+    if (playedHand.size !== 4 || playedHand.size !== 5) {
+        return {isHand: false, scoringCards: []};
     }
+
+    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+        //todo: implement check for straight with a combo of 4 cards
+    }
+
+    //normal check with 5 cards
+
+
+    return {isHand: true, scoringCards: playedHand.cards};
 
 }
 
@@ -200,9 +231,15 @@ function isHighCard(playedHand, jokers) {
     //find the card with the highest rank
     let highestCard = playedHand.cards[0];
 
-    if (playedHand.size == 1)
+    for (let i = 0; i < playedHand.size; i++) {
+        let currCompare = playedHand.cards[i];
 
-    return {isHand: true, scoringCards: []};
+        if (highestCard.rank > currCompare.rank) {
+            highestCard = currCompare;
+        }
+    }
+
+    return {isHand: true, scoringCards: [highestCard]};
 }
 
 export default checkHandType;

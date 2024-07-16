@@ -136,6 +136,19 @@ class PlayingCard {
         }
         return true;
     }
+
+    //helper function for comparing suits of two cards, taking wild cards into account
+    areSuitsEqual(cardTwo) {
+        if (this.suit === cardTwo.suit) {
+            return true;
+        }
+
+        if (this.enhancement === EnhancementTypes.WILD || cardTwo.enhancement === EnhancementTypes.WILD) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 export default PlayingCard;
