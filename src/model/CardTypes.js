@@ -14,30 +14,30 @@
 
 const EditionTypes = Object.freeze({
     NONE: 0,
-    FOIL: 1,
-    HOLOGRAPHIC: 2,
-    POLYCHROME: 3,
-    NEGATIVE: -1, //Jokers only
+    FOIL: 1, //+50 Chips
+    HOLOGRAPHIC: 2, //+10 Mult
+    POLYCHROME: 3, //x1.5 Mult
+    NEGATIVE: -1, //Jokers only: doesn't take up a card slot
 });
 
 const EnhancementTypes = Object.freeze({
     NONE: 0,
-    BONUS: 1,
-    MULT: 2,
-    WILD: 3,
-    GLASS: 4,
-    STEEL: 5,
-    STONE: 6,
-    GOLD: 7,
-    LUCKY: 8,
+    BONUS: 1, //+30 Chips
+    MULT: 2, //+4 Mult
+    WILD: 3, //Is considered to be every suit simultaneously 
+    GLASS: 4, //x2 Mult, 1 in 4 chance to destroy card after all scoring is finished
+    STEEL: 5, //x1.5 Mult while this card stays in hand
+    STONE: 6, //+50 Chips, no rank or suit, card always scores
+    GOLD: 7, //$3 if this card is held in hand at end of round
+    LUCKY: 8, //1 in 5 chance for +20 Mult, 1 in 15 chance to win $20
 });
 
 const SealTypes = Object.freeze({
     NONE: 0,
-    GOLD: 1,
-    RED: 2,
-    BLUE: 3,
-    PURPLE: 4,
+    GOLD: 1, //Earn $3 when this card is played and scores
+    RED: 2, //Retrigger this card 1 time. Also applies to cards whose effects trigger while held in hand.
+    BLUE: 3, //If this card is held at end of round, it creates the Planet card matching the final poker hand played, if you have room
+    PURPLE: 4, //Creates a Tarot card when discarded, if you have room
 });
 
 const Suits = Object.freeze({

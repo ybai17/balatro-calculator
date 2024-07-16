@@ -1,14 +1,16 @@
-import ScoreObject from "./ScoreObject";
-
 /**
  * This exported const object lists the hand types that can be scored in Balatro, as well as their base scoring components.
  * Both numbers can be affected by the type of hand played, the cards played, planet cards (which upgrade the scoring for
  * various hand types), and various joker effects.
  * 
+ * The object keys that map to the score component arrays are based off the priority values in the HandTypesAndPriority file.
+ * 
  * [Chips, Multiplier]
  * 
  * The Flush Five, Flush House, and Five of a Kind hands are secret hands unique to Balatro and not found in poker normally.
  */
+
+import TypesAndPriority from "./HandTypesAndPriority";
 
 //initialize the base scoring objects? might be needed later
 /*
@@ -27,18 +29,18 @@ let high_card = new ScoreObject(5, 1);
 */
 
 const TypesAndScores = Object.freeze({
-    FLUSH_FIVE: [160, 16],
-    FLUSH_HOUSE: [140, 14],
-    FIVE_OF_A_KIND: [120, 12],
-    STRAIGHT_FLUSH: [100, 8],
-    FOUR_OF_A_KIND: [60, 7],
-    FULL_HOUSE: [40, 4],
-    FLUSH: [35, 4],
-    STRAIGHT: [30, 4],
-    THREE_OF_A_KIND: [30, 3],
-    TWO_PAIR: [20, 2],
-    PAIR: [10, 2],
-    HIGH_CARD: [5, 1],
+    12: [160, 16],
+    11: [140, 14],
+    10: [120, 12],
+    9: [100, 8],
+    8: [60, 7],
+    7: [40, 4],
+    6: [35, 4],
+    5: [30, 4],
+    4: [30, 3],
+    3: [20, 2],
+    2: [10, 2],
+    1: [5, 1],
 });
 
 export default TypesAndScores;

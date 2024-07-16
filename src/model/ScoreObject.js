@@ -9,12 +9,20 @@
  * various hand types), and various joker effects.
  */
 
+import TypesAndPriority from "./HandTypesAndPriority";
+import TypesAndScores from "./HandTypesAndBaseScores";
+
 class ScoreObject {
 
+    handType;
     scoringCards = [];
 
-    constructor(chips, multiplier) {
-        this.chips = chips, this.multiplier = multiplier;
+    constructor(handTypeAndScoringCards) {
+        this.handType = handTypeAndScoringCards.handType;
+        this.scoringCards = handTypeAndScoringCards.scoringCards;
+
+        this.chips = TypesAndScores[this.handType][0];
+        this.multiplier = TypesAndScores[this.handType][1];
     }
 
     setChips(newAmount) {
@@ -25,7 +33,19 @@ class ScoreObject {
         this.multiplier = newAmount;
     }
 
-    get score() {
+    activateJokers(jokers) {
+
+    }
+
+    activatePlanets(currentHandLevels) {
+
+    }
+
+    activatePlayingCardEffects() {
+        //editions, enhancements, seals, 
+    }
+
+    get finalScore() {
         return this.chips * this.multiplier;
     }
 }
