@@ -169,23 +169,34 @@ function isStraightFlush(playedHand, jokers) {
 }
 
 function isFourOfAKind(playedHand, jokers) {
+
+    let stoneCards = [];
+
     if (playedHand.size == 4 || playedHand.size == 5) {
         let uniqueRanksAndCounts = {};
 
         for (let i = 0; i < playedHand.size; i++) {
             let curr = playedHand.cards[i];
 
-            if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank) && curr.enhancement !== EnhancementTypes.STONE) {
-                uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
+            if (curr.enhancement !== EnhancementTypes.STONE) {
+                if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
+                    uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
+                }
+                uniqueRanksAndCounts[curr.rank].push(curr);
+            } else {
+                stoneCards.push(curr);
             }
-            uniqueRanksAndCounts[curr.rank].push(curr);
         }
 
-        for (currKey in Object.keys(uniqueRanksAndCounts)) {
-            if (uniqueRanksAndCounts[currKey].length === 4) {
-                //add stone card if it exists
+        for (const currKey in Object.keys(uniqueRanksAndCounts)) {
+            let currRankArray = uniqueRanksAndCounts[currKey];
 
-                return {isHand: true, scoringCards: uniqueRanksAndCounts[currKey]};
+            if (currRankArray.length === 4) {
+                //add stone card if it exists
+                if (stoneCards.length !== 0) {
+                    currRankArray.push(stoneCards[0]);
+                }
+                return {isHand: true, scoringCards: currRankArray};
             }
         }
     }
