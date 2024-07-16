@@ -7,6 +7,7 @@
  * FOR NOW, ASSUME NO STONE CARDS
  */
 
+import { EnhancementTypes } from "./CardTypes";
 import TypesAndScores from "./HandTypesAndBaseScores";
 import TypesAndPriority from "./HandTypesAndPriority";
 import PlayedHand from "./Hands/PlayedHandObject";
@@ -100,11 +101,18 @@ function checkHandType(playedHand, jokers) {
 //-----------------------------------------
 
 function isFlushFive(playedHand, jokers) {
+
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
+        
+        if (firstCard.enhancement === EnhancementTypes.STONE) {
+            return {isHand: false, scoringCards: []};
+        }
 
         for (let i = 1; i < 5; i++) {
-            if (firstCard.rank != playedHand.cards[i] || !firstCard.areSuitsEqual(playedHand.cards[i])) {
+            let curr = playedHand.cards[i];
+            if ((firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) ||
+                curr.enhancement === EnhancementTypes.STONE) {
                 return {isHand: false, scoringCards: []};
             }
         }
@@ -131,8 +139,13 @@ function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
+        if (firstCard.enhancement === EnhancementTypes.STONE) {
+            return {isHand: false, scoringCards: []};
+        }
+
         for (let i = 1; i < 5; i++) {
-            if (firstCard.rank != playedHand.cards[i]) {
+            let curr = playedHand.cards[i];
+            if (firstCard.rank != curr.rank || curr.enhancement === EnhancementTypes.STONE) {
                 return {isHand: false, scoringCards: []};
             }
         }
@@ -157,7 +170,24 @@ function isStraightFlush(playedHand, jokers) {
 
 function isFourOfAKind(playedHand, jokers) {
     if (playedHand.size == 4 || playedHand.size == 5) {
+        let uniqueRanksAndCounts = {};
 
+        for (let i = 0; i < playedHand.size; i++) {
+            let curr = playedHand.cards[i];
+
+            if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank) && curr.enhancement !== EnhancementTypes.STONE) {
+                uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
+            }
+            uniqueRanksAndCounts[curr.rank].push(curr);
+        }
+
+        for (currKey in Object.keys(uniqueRanksAndCounts)) {
+            if (uniqueRanksAndCounts[currKey].length === 4) {
+                //add stone card if it exists
+
+                return {isHand: true, scoringCards: uniqueRanksAndCounts[currKey]};
+            }
+        }
     }
 
     return {isHand: false, scoringCards: []};
@@ -170,6 +200,11 @@ function isFullHouse(playedHand, jokers) {
 
         for (let i = 0; i < 5; i++) {
             let curr = playedHand.cards[i];
+
+            if (curr.enhancement === EnhancementTypes.STONE) {
+                return {isHand: false, scoringCards: []};
+            }
+
             if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
                 uniqueRanksAndCounts[curr.rank] = 1;
             }
