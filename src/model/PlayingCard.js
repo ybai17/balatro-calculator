@@ -3,14 +3,14 @@
  * Keep in mind that in Balatro, you can have more or fewer playing cards than the standard 52,
  * and that suit and rank distributions are mutable.
  * 
- * A card will be designated with an ID similar to their rank:
- *  Ace = 1
+ * A card will be designated with an ID similar to their rank, except for the Ace, because Aces are high in this game.
  *  2 = 2
  *  3 = 3
  *  ...
  *  Jack = 11
  *  Queen = 12
  *  King = 13
+ *  Ace = 14
  * 
  * ----------------------------------------------------
  * 
@@ -111,7 +111,7 @@ class PlayingCard {
                 return this.rank + this.editionChipsModifier + this.enhancementChipsModifier;
             case 11, 12, 13:
                 return 10 + this.editionChipsModifier + this.enhancementChipsModifier;
-            case 1:
+            case 14:
                 return 11 + this.editionChipsModifier + this.enhancementChipsModifier;
         }
     }

@@ -47,4 +47,15 @@ const Suits = Object.freeze({
     SPADES: 3,
 });
 
-export { EditionTypes, EnhancementTypes, SealTypes, Suits };
+//helper function for comparing suits of two cards, taking wild cards into account
+function areSuitsEqual(cardOne, cardTwo) {
+    if (cardOne.suit === cardTwo.suit) {
+        return true;
+    }
+
+    if (cardOne.enhancement === EnhancementTypes.WILD || cardTwo.enhancement === EnhancementTypes.WILD) {
+        return true;
+    }
+}
+
+export { EditionTypes, EnhancementTypes, SealTypes, Suits , areSuitsEqual};
