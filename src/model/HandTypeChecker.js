@@ -109,8 +109,7 @@ function isFlushFive(playedHand, jokers) {
             return {isHand: false, scoringCards: []};
         }
 
-        for (let i = 1; i < 5; i++) {
-            let curr = playedHand.cards[i];
+        for (const curr in playedHand.cards) {
             if ((firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) ||
                 curr.enhancement === EnhancementTypes.STONE) {
                 return {isHand: false, scoringCards: []};
@@ -143,8 +142,7 @@ function isFiveOfAKind(playedHand, jokers) {
             return {isHand: false, scoringCards: []};
         }
 
-        for (let i = 1; i < 5; i++) {
-            let curr = playedHand.cards[i];
+        for (const curr in playedHand.cards) {
             if (firstCard.rank != curr.rank || curr.enhancement === EnhancementTypes.STONE) {
                 return {isHand: false, scoringCards: []};
             }
@@ -178,9 +176,7 @@ function isFourOfAKind(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    for (let i = 0; i < playedHand.size; i++) {
-        let curr = playedHand.cards[i];
-
+    for (const curr in playedHand.cards) {
         if (curr.enhancement === EnhancementTypes.STONE) {
             stoneCards.push(curr);
             continue;
@@ -192,8 +188,12 @@ function isFourOfAKind(playedHand, jokers) {
         uniqueRanksAndCounts[curr.rank].push(curr);
     }
 
-    for (const currKey in Object.keys(uniqueRanksAndCounts)) {
-        let currRankArray = uniqueRanksAndCounts[currKey];
+    if (stoneCards.length > 1) {
+        return {isHand: false, scoringCards: []};
+    }
+
+    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+        let currRankArray = uniqueRanksAndCounts[rankKey];
 
         if (currRankArray.length === 4) {
             //add stone card if it exists
@@ -212,8 +212,7 @@ function isFullHouse(playedHand, jokers) {
 
         let uniqueRanksAndCounts = {};
 
-        for (let i = 0; i < 5; i++) {
-            let curr = playedHand.cards[i];
+        for (const curr in playedHand.cards) {
 
             if (curr.enhancement === EnhancementTypes.STONE) {
                 return {isHand: false, scoringCards: []};
@@ -295,8 +294,7 @@ function isThreeOfAKind(playedHand, jokers) {
     let uniqueRanksAndCounts = {};
     let stoneCards = [];
 
-    for (let i = 0; i < playedHand.size; i++) {
-        let curr = playedHand.cards[i];
+    for (const curr in playedHand.cards) {
 
         if (curr.enhancement === EnhancementTypes.STONE) {
             stoneCards.push(curr);
@@ -307,6 +305,10 @@ function isThreeOfAKind(playedHand, jokers) {
             uniqueRanksAndCounts[curr.rank] = [curr];
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
+    }
+
+    if (stoneCards.length > 2) {
+        return {isHand: false, scoringCards: []};
     }
 
     for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
@@ -323,12 +325,49 @@ function isThreeOfAKind(playedHand, jokers) {
 
 function isTwoPair(playedHand, jokers) {
     if (playedHand.size < 4) {
-
+        return {isHand: false, scoringCards: []};
     }
+
+    let uniqueRanksAndCounts = {};
+    let stoneCards = [];
+
+    for (const currCard in playedHand.cards) {
+        if (currCard.enhancement === EnhancementTypes.STONE) {
+            stoneCards.push(currCard);
+            continue;
+        }
+
+        if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
+            uniqueRanksAndCounts[currCard.rank] = [currCard];
+        }  
+        uniqueRanksAndCounts[currCard.rank].push(currCard);
+    }
+
+    if (stoneCards.length > 1) {
+        return {isHand: false, scoringCards: []};
+    }
+
+    let ranksWithPairArray = [];
+
+    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+        let currRankArray = uniqueRanksAndCounts[rankKey];
+        if (currRankArray.length === 2) {
+            ranksWithPairArray = ranksWithPairArray.concat(currRankArray);
+        }
+    }
+
+    if (ranksWithPairArray.length == 4) {
+        if (stoneCards.length !== 0) {
+            ranksWithPairArray.push(stoneCards[0]);
+        }
+        return {isHand: true, scoringCards: ranksWithPairArray};
+    }
+
+    return {isHand: false, scoringCards: []};
 }
 
 function isPair(playedHand, jokers) {
-
+    
 }
 
 //high card will be the default if no other hands are detected
