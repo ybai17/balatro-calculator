@@ -1,12 +1,12 @@
 class PlayedHand {
 
     handCardsArray = [];
-    size = 0;
+    sizeField = 0;
 
     constructor(handCardsArray) {
         handCardsArray.forEach((curr) => {
             this.handCardsArray.push(curr);
-            size += 1;
+            this.size += 1;
         })
     }
 
@@ -15,7 +15,15 @@ class PlayedHand {
     }
 
     get size() {
-        return this.size;
+        return this.sizeField;
+    }
+
+    set cards(newCardsArray) {
+        this.handCardsArray = newCardsArray;
+    }
+
+    set size(newSize) {
+        this.sizeField = newSize;
     }
 }
 

@@ -49,53 +49,54 @@ class PlayingCard {
     enhancementChipsModifier = 0;
 
     constructor(rank, suit, edition, enhancement, seal) {
-        this.rank = rank;
-        this.suit = suit;
-        this.edition = edition;
-        this.enhancement = enhancement;
-        this.seal = seal;
+        this.rankField = rank;
+        this.suitField = suit;
+        this.editionField = edition;
+        this.enhancementField = enhancement;
+        this.sealField = seal;
     }
 
     //getters and setters
 
     get rank() {
-        return this.rank;
+        return this.rankField;
     }
 
     get suit() {
-        return this.suit;
+        return this.suitField;
     }
 
     get edition() {
-        return this.edition;
+        return this.editionField;
     }
 
     get enhancement() {
-        return this.enhancement;
+        return this.enhancementField;
     }
 
     get seal() {
-        return this.seal;
+        return this.sealField;
     }
+
     //--------------------------------------
     set rank(newRank) {
-        this.rank = newRank;
+        this.rankField = newRank;
     }
 
     set suit(newSuit) {
-        this.suit = newSuit;
+        this.suitField = newSuit;
     }
 
     set edition(newEdition) {
-        this.edition = newEdition;
+        this.editionField = newEdition;
     }
 
     set enhancement(newEnhancement) {
-        this.enhancement = newEnhancement;
+        this.enhancementField = newEnhancement;
     }
 
     set seal(newSeal) {
-        this.sea = newSeal;
+        this.sealField = newSeal;
     }
 
     //-----------------------------------------------------------

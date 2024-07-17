@@ -8,11 +8,8 @@
  */
 
 import { EnhancementTypes } from "./CardTypes";
-import TypesAndScores from "./HandTypesAndBaseScores";
 import TypesAndPriority from "./HandTypesAndPriority";
-import PlayedHand from "./Hands/PlayedHandObject";
 import JokerCards from "./JokerCards/JokerDefs";
-import PlayingCard from "./PlayingCard";
 import { Suits } from "./CardTypes";
 
 function checkHandType(playedHand, jokers) {
