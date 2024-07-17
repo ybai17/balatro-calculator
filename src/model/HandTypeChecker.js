@@ -367,7 +367,46 @@ function isTwoPair(playedHand, jokers) {
 }
 
 function isPair(playedHand, jokers) {
-    
+    if (playedHand.size < 2) {
+        return {isHand: false, scoringCards: []};
+    }
+
+    let uniqueRanksAndCounts = {};
+    let stoneCards = [];
+
+    for (const currCard in playedHand.cards) {
+        if (currCard.enhancement === EnhancementTypes.STONE) {
+            stoneCards.push(currCard);
+            continue;
+        }
+
+        if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
+            uniqueRanksAndCounts[currCard.rank] = [currCard];
+        }  
+        uniqueRanksAndCounts[currCard.rank].push(currCard);
+    }
+
+    if (stoneCards.length > 3) {
+        return {isHand: false, scoringCards: []};
+    }
+
+    let ranksWithPairArray = [];
+
+    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+        let currRankArray = uniqueRanksAndCounts[rankKey];
+        if (currRankArray.length === 2) {
+            ranksWithPairArray = ranksWithPairArray.concat(currRankArray);
+        }
+    }
+
+    if (ranksWithPairArray.length == 2) {
+        if (stoneCards.length !== 0) {
+            ranksWithPairArray.push(stoneCards[0]);
+        }
+        return {isHand: true, scoringCards: ranksWithPairArray};
+    }
+
+    return {isHand: false, scoringCards: []};
 }
 
 //high card will be the default if no other hands are detected
