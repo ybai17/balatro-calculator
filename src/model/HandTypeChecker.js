@@ -13,8 +13,20 @@ import TypesAndPriority from "./HandTypesAndPriority";
 import PlayedHand from "./Hands/PlayedHandObject";
 import JokerCards from "./JokerCards/JokerDefs";
 import PlayingCard from "./PlayingCard";
+import { Suits } from "./CardTypes";
 
 function checkHandType(playedHand, jokers) {
+
+    //what if we just clear out the stone cards here first, to avoid repetition in each function checking for them?
+    let stoneCards = [];
+
+    for (let i = 0; i < playedHand.size; i++) {
+        let currCard = playedHand.cards[i];
+        if (currCard.enhancement === EnhancementTypes.STONE) {
+            stoneCards.push(currCard);
+            playedHand.cards.splice(i, 1);
+        }
+    }
 
     //boolean, array of Cards
     let handCheck;
@@ -25,75 +37,75 @@ function checkHandType(playedHand, jokers) {
     } else if (playedHand.size === 2) {
         handCheck = isPair(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
     } else if (playedHand.size === 3) {
         handCheck = isThreeOfAKind(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
     }
 
     if (playedHand.size === 5) {
         handCheck = isFlushFive(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FLUSH_FIVE, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.FLUSH_FIVE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFlushHouse(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FLUSH_HOUSE, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.FLUSH_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFiveOfAKind(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFullHouse(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FULL_HOUSE, scoringCards: handCheck.scoringCards};
+            return {handType: TypesAndPriority.FULL_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
     }
     
     handCheck = isStraightFlush(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.STRAIGHT_FLUSH, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.STRAIGHT_FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isFourOfAKind(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isFlush(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.FLUSH, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isStraight(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.STRAIGHT, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.STRAIGHT, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isThreeOfAKind(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isTwoPair(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.TWO_PAIR, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.TWO_PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isPair(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards};
+        return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isHighCard(playedHand, jokers);
-    return {handType: TypesAndPriority.HIGH_CARD, scoringCards: handCheck.scoringCards};
+    return {handType: TypesAndPriority.HIGH_CARD, scoringCards: handCheck.scoringCards.concat(stoneCards)};
 }
 
 //-----------------------------------------
@@ -104,14 +116,9 @@ function isFlushFive(playedHand, jokers) {
 
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
-        
-        if (firstCard.enhancement === EnhancementTypes.STONE) {
-            return {isHand: false, scoringCards: []};
-        }
 
         for (const curr in playedHand.cards) {
-            if ((firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) ||
-                curr.enhancement === EnhancementTypes.STONE) {
+            if (firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) {
                 return {isHand: false, scoringCards: []};
             }
         }
@@ -138,12 +145,8 @@ function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
-        if (firstCard.enhancement === EnhancementTypes.STONE) {
-            return {isHand: false, scoringCards: []};
-        }
-
         for (const curr in playedHand.cards) {
-            if (firstCard.rank != curr.rank || curr.enhancement === EnhancementTypes.STONE) {
+            if (firstCard.rank !== curr.rank) {
                 return {isHand: false, scoringCards: []};
             }
         }
@@ -168,8 +171,6 @@ function isStraightFlush(playedHand, jokers) {
 
 function isFourOfAKind(playedHand, jokers) {
 
-    let stoneCards = [];
-
     if (playedHand.size < 4) {
         return {isHand: false, scoringCards: []};
     }
@@ -177,10 +178,6 @@ function isFourOfAKind(playedHand, jokers) {
     let uniqueRanksAndCounts = {};
 
     for (const curr in playedHand.cards) {
-        if (curr.enhancement === EnhancementTypes.STONE) {
-            stoneCards.push(curr);
-            continue;
-        }
 
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
@@ -188,18 +185,10 @@ function isFourOfAKind(playedHand, jokers) {
         uniqueRanksAndCounts[curr.rank].push(curr);
     }
 
-    if (stoneCards.length > 1) {
-        return {isHand: false, scoringCards: []};
-    }
-
     for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
 
         if (currRankArray.length === 4) {
-            //add stone card if it exists
-            if (stoneCards.length !== 0) {
-                currRankArray.push(stoneCards[0]);
-            }
             return {isHand: true, scoringCards: currRankArray};
         }
     }
@@ -213,10 +202,6 @@ function isFullHouse(playedHand, jokers) {
         let uniqueRanksAndCounts = {};
 
         for (const curr in playedHand.cards) {
-
-            if (curr.enhancement === EnhancementTypes.STONE) {
-                return {isHand: false, scoringCards: []};
-            }
 
             if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
                 uniqueRanksAndCounts[curr.rank] = 1;
@@ -247,25 +232,51 @@ function isFlush(playedHand, jokers) {
         return {isHand: false, scoringCards: []};
     }
 
-    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
-        
-        //todo: implement checking for a flush of 4 cards
+    let suitsAndCounts = {
+        CLUBS: [],
+        DIAMONDS: [],
+        HEARTS: [],
+        SPADES: [],
+    };
 
-        return {isHand: false, scoringCards: []};
-    }
-
-    //normal check for a flush with 5 cards
-    for (let i = 0; i < playedHand.size - 1; i++) {
-        let curr = playedHand.cards[i];
-        let next = playedHand.cards[i + 1];
-
-        if (!curr.areSuitsEqual(next)) {
-            return {isHand: false, scoringCards: []};
+    for (const currCard in playedHand.cards) {
+        if (currCard.enhancement === EnhancementTypes.WILD) {
+            suitsAndCounts.CLUBS.push(currCard);
+            suitsAndCounts.DIAMONDS.push(currCard);
+            suitsAndCounts.HEARTS.push(currCard);
+            suitsAndCounts.SPADES.push(currCard);
+            continue;
+        }
+        switch (currCard.suit) {
+            case Suits.CLUBS:
+                suitsAndCounts.CLUBS.push(currCard);
+                break;
+            case Suits.DIAMONDS:
+                suitsAndCounts.DIAMONDS.push(currCard);
+                break;
+            case Suits.HEARTS:
+                suitsAndCounts.HEARTS.push(currCard);
+                break;
+            case Suits.SPADES:
+                suitsAndCounts.SPADES.push(currCard);
+                break;
         }
     }
 
-    return {isHand: true, scoringCards: playedHand.cards};
+    for (const suitKey in Object.keys(suitsAndCounts)) {
+        let currArray = suitsAndCounts[suitKey];
 
+        if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+            if (currArray.length === 4) {
+                return {isHand: true, scoringCards: currArray};
+            }
+        }
+        if (currArray.length === 5) {
+            return {isHand: true, scoringCards: currArray};
+        }
+    }
+
+    return {isHand: false, scoringCards: []};
 }
 
 function isStraight(playedHand, jokers) {
@@ -282,7 +293,6 @@ function isStraight(playedHand, jokers) {
 
 
     return {isHand: true, scoringCards: playedHand.cards};
-
 }
 
 function isThreeOfAKind(playedHand, jokers) {
@@ -292,23 +302,13 @@ function isThreeOfAKind(playedHand, jokers) {
     }
 
     let uniqueRanksAndCounts = {};
-    let stoneCards = [];
 
     for (const curr in playedHand.cards) {
-
-        if (curr.enhancement === EnhancementTypes.STONE) {
-            stoneCards.push(curr);
-            continue;
-        }
 
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr];
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
-    }
-
-    if (stoneCards.length > 2) {
-        return {isHand: false, scoringCards: []};
     }
 
     for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
@@ -329,22 +329,13 @@ function isTwoPair(playedHand, jokers) {
     }
 
     let uniqueRanksAndCounts = {};
-    let stoneCards = [];
 
     for (const currCard in playedHand.cards) {
-        if (currCard.enhancement === EnhancementTypes.STONE) {
-            stoneCards.push(currCard);
-            continue;
-        }
 
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
-    }
-
-    if (stoneCards.length > 1) {
-        return {isHand: false, scoringCards: []};
     }
 
     let ranksWithPairArray = [];
@@ -357,9 +348,6 @@ function isTwoPair(playedHand, jokers) {
     }
 
     if (ranksWithPairArray.length == 4) {
-        if (stoneCards.length !== 0) {
-            ranksWithPairArray.push(stoneCards[0]);
-        }
         return {isHand: true, scoringCards: ranksWithPairArray};
     }
 
@@ -372,22 +360,13 @@ function isPair(playedHand, jokers) {
     }
 
     let uniqueRanksAndCounts = {};
-    let stoneCards = [];
 
     for (const currCard in playedHand.cards) {
-        if (currCard.enhancement === EnhancementTypes.STONE) {
-            stoneCards.push(currCard);
-            continue;
-        }
 
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
-    }
-
-    if (stoneCards.length > 3) {
-        return {isHand: false, scoringCards: []};
     }
 
     let ranksWithPairArray = [];
@@ -400,9 +379,6 @@ function isPair(playedHand, jokers) {
     }
 
     if (ranksWithPairArray.length == 2) {
-        if (stoneCards.length !== 0) {
-            ranksWithPairArray.push(stoneCards[0]);
-        }
         return {isHand: true, scoringCards: ranksWithPairArray};
     }
 
@@ -423,8 +399,6 @@ function isHighCard(playedHand, jokers) {
             highestCard = currCompare;
         }
     }
-
-    //need to add any played stone cards
 
     return {isHand: true, scoringCards: [highestCard]};
 }
