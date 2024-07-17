@@ -28,6 +28,11 @@ function checkHandType(playedHand, jokers) {
         }
     }
 
+    //sort cards in descending order ahead of time for convenience
+    playedHand.cards = playedHand.cards.sort((cardA, cardB) => {
+        return cardB.rank - cardA.rank;
+    });
+
     //boolean, array of Cards
     let handCheck;
 
@@ -279,20 +284,42 @@ function isFlush(playedHand, jokers) {
     return {isHand: false, scoringCards: []};
 }
 
+//cards should already be sorted in descending order by rank when this is called
 function isStraight(playedHand, jokers) {
 
     if (playedHand.size < 4) {
         return {isHand: false, scoringCards: []};
     }
 
+    let handArray = playedHand.cards;
+
     if (jokers.includes(JokerCards.FOUR_FINGERS)) {
         //todo: implement check for straight with a combo of 4 cards
+        if (handArray[0].rank - handArray[1].rank === 1 &&
+            handArray[1].rank - handArray[2].rank === 1 &&
+            handArray[2].rank - handArray[3].rank === 1) {
+            
+            return {isHand: true, scoringCards: playedHand.cards};
+        }
+
+        if (handArray[1].rank - handArray[2].rank === 1 &&
+            handArray[2].rank - handArray[3].rank === 1 &&
+            handArray[3].rank - handArray[4].rank === 1) {
+            
+            return {isHand: true, scoringCards: playedHand.cards};
+        }
+    } else {
+        //normal check with 5 cards
+        if (handArray[0].rank - handArray[1].rank === 1 &&
+            handArray[1].rank - handArray[2].rank === 1 &&
+            handArray[2].rank - handArray[3].rank === 1 &&
+            handArray[3].rank - handArray[4].rank === 1) {
+            
+            return {isHand: true, scoringCards: playedHand.cards};
+        }
     }
 
-    //normal check with 5 cards
-
-
-    return {isHand: true, scoringCards: playedHand.cards};
+    return {isHand: false, scoringCards: []};
 }
 
 function isThreeOfAKind(playedHand, jokers) {
