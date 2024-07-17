@@ -172,32 +172,35 @@ function isFourOfAKind(playedHand, jokers) {
 
     let stoneCards = [];
 
-    if (playedHand.size == 4 || playedHand.size == 5) {
-        let uniqueRanksAndCounts = {};
+    if (playedHand.size !== 4 || playedHand.size !== 5) {
+        return {isHand: false, scoringCards: []};
+    }
 
-        for (let i = 0; i < playedHand.size; i++) {
-            let curr = playedHand.cards[i];
+    let uniqueRanksAndCounts = {};
 
-            if (curr.enhancement !== EnhancementTypes.STONE) {
-                if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
-                    uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
-                }
-                uniqueRanksAndCounts[curr.rank].push(curr);
-            } else {
-                stoneCards.push(curr);
-            }
+    for (let i = 0; i < playedHand.size; i++) {
+        let curr = playedHand.cards[i];
+
+        if (curr.enhancement === EnhancementTypes.STONE) {
+            stoneCards.push(curr);
+            continue;
         }
 
-        for (const currKey in Object.keys(uniqueRanksAndCounts)) {
-            let currRankArray = uniqueRanksAndCounts[currKey];
+        if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
+            uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
+        }
+        uniqueRanksAndCounts[curr.rank].push(curr);
+    }
 
-            if (currRankArray.length === 4) {
-                //add stone card if it exists
-                if (stoneCards.length !== 0) {
-                    currRankArray.push(stoneCards[0]);
-                }
-                return {isHand: true, scoringCards: currRankArray};
+    for (const currKey in Object.keys(uniqueRanksAndCounts)) {
+        let currRankArray = uniqueRanksAndCounts[currKey];
+
+        if (currRankArray.length === 4) {
+            //add stone card if it exists
+            if (stoneCards.length !== 0) {
+                currRankArray.push(stoneCards[0]);
             }
+            return {isHand: true, scoringCards: currRankArray};
         }
     }
 
@@ -285,10 +288,41 @@ function isStraight(playedHand, jokers) {
 
 function isThreeOfAKind(playedHand, jokers) {
 
+    if (playedHand.size === 1 || playedHand.size === 2) {
+        return {isHand: false, scoringCards: []};
+    }
+
+    let uniqueRanksAndCounts = {};
+    let stoneCards = [];
+
+    for (let i = 0; i < playedHand.size; i++) {
+        let curr = playedHand.cards[i];
+
+        if (curr.enhancement === EnhancementTypes.STONE) {
+            stoneCards.push(curr);
+            continue;
+        }
+
+        if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
+            uniqueRanksAndCounts[curr.rank] = [curr];
+        }
+        uniqueRanksAndCounts[curr.rank].push(curr);
+    }
+
+    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+        let currRankArray = uniqueRanksAndCounts[rankKey];
+        if (currRankArray.length === 3) {
+            if (stoneCards.length !== 0) {
+                return {isHand: true, scoringCards: currRankArray.concat(stoneCards)};
+            }
+        }
+    }
+
+    return {isHand: false, scoringCards: []};
 }
 
 function isTwoPair(playedHand, jokers) {
-
+    
 }
 
 function isPair(playedHand, jokers) {
@@ -309,6 +343,8 @@ function isHighCard(playedHand, jokers) {
             highestCard = currCompare;
         }
     }
+
+    //need to add any played stone cards
 
     return {isHand: true, scoringCards: [highestCard]};
 }
