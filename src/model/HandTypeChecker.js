@@ -172,7 +172,7 @@ function isFourOfAKind(playedHand, jokers) {
 
     let stoneCards = [];
 
-    if (playedHand.size !== 4 || playedHand.size !== 5) {
+    if (playedHand.size < 4) {
         return {isHand: false, scoringCards: []};
     }
 
@@ -244,7 +244,7 @@ function isFullHouse(playedHand, jokers) {
 
 function isFlush(playedHand, jokers) {
 
-    if (playedHand.size !== 4 || playedHand.size !== 5) {
+    if (playedHand.size < 4) {
         return {isHand: false, scoringCards: []};
     }
 
@@ -271,7 +271,7 @@ function isFlush(playedHand, jokers) {
 
 function isStraight(playedHand, jokers) {
 
-    if (playedHand.size !== 4 || playedHand.size !== 5) {
+    if (playedHand.size < 4) {
         return {isHand: false, scoringCards: []};
     }
 
@@ -288,7 +288,7 @@ function isStraight(playedHand, jokers) {
 
 function isThreeOfAKind(playedHand, jokers) {
 
-    if (playedHand.size === 1 || playedHand.size === 2) {
+    if (playedHand.size < 3) {
         return {isHand: false, scoringCards: []};
     }
 
@@ -322,7 +322,9 @@ function isThreeOfAKind(playedHand, jokers) {
 }
 
 function isTwoPair(playedHand, jokers) {
-    
+    if (playedHand.size < 4) {
+
+    }
 }
 
 function isPair(playedHand, jokers) {
