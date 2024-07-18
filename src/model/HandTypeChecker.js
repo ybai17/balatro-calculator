@@ -186,6 +186,7 @@ function isFourOfAKind(playedHand, jokers) {
     playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
+            return;
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
     });
@@ -333,6 +334,7 @@ function isThreeOfAKind(playedHand, jokers) {
     playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr];
+            return;
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
     });
@@ -359,6 +361,7 @@ function isTwoPair(playedHand, jokers) {
     playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
+            return;
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
     });
@@ -389,6 +392,7 @@ function isPair(playedHand, jokers) {
     playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
+            return;
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
     });
