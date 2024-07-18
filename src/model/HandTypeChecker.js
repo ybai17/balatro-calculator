@@ -190,7 +190,7 @@ function isFourOfAKind(playedHand, jokers) {
         uniqueRanksAndCounts[curr.rank].push(curr);
     });
 
-    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+    for (const rankKey in uniqueRanksAndCounts) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
 
         if (currRankArray.length === 4) {
@@ -209,6 +209,7 @@ function isFullHouse(playedHand, jokers) {
         playedHand.cards.forEach((curr) => {
             if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
                 uniqueRanksAndCounts[curr.rank] = 1;
+                return;
             }
             uniqueRanksAndCounts[curr.rank] += 1;
         });
@@ -267,7 +268,7 @@ function isFlush(playedHand, jokers) {
         }
     });
 
-    for (const suitKey in Object.keys(suitsAndCounts)) {
+    for (const suitKey in suitsAndCounts) {
         let currArray = suitsAndCounts[suitKey];
 
         if (jokers.includes(JokerCards.FOUR_FINGERS)) {
@@ -336,7 +337,7 @@ function isThreeOfAKind(playedHand, jokers) {
         uniqueRanksAndCounts[curr.rank].push(curr);
     });
 
-    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+    for (const rankKey in uniqueRanksAndCounts) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
         if (currRankArray.length === 3) {
             if (stoneCards.length !== 0) {
@@ -364,7 +365,7 @@ function isTwoPair(playedHand, jokers) {
 
     let ranksWithPairArray = [];
 
-    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+    for (const rankKey in uniqueRanksAndCounts) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
         if (currRankArray.length === 2) {
             ranksWithPairArray = ranksWithPairArray.concat(currRankArray);
@@ -394,7 +395,7 @@ function isPair(playedHand, jokers) {
 
     let ranksWithPairArray = [];
 
-    for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
+    for (const rankKey in uniqueRanksAndCounts) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
         if (currRankArray.length === 2) {
             ranksWithPairArray = ranksWithPairArray.concat(currRankArray);
