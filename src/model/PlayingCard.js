@@ -59,7 +59,11 @@ class PlayingCard {
         this.enhancementField = enhancement;
         this.sealField = seal;
 
-        this.uniqueID = "" + rank + suit + Date.now();
+        this.uniqueID = this.rankField + "_" +
+                        this.suitField + "_" +
+                        this.editionField + "_" +
+                        this.enhancementField + "_" +
+                        this.sealField + "_" + Date.now();
     }
 
     //getters and setters
