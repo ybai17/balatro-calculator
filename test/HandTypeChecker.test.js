@@ -29,8 +29,10 @@ function areCardArraysEqual(array1, array2) {
     return true;
 }
 
-test('checks for five of a kind hand', () => {
-    let cardArrayInput = [
+test('Five of a Kind simple no jokers', () => {
+    //five cards of the same rank but different suits
+
+    let testCards = [
         new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
@@ -38,9 +40,9 @@ test('checks for five of a kind hand', () => {
         new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
     ];
 
-    let hand = new PlayedHand(cardArrayInput);
+    let hand = new PlayedHand(testCards);
 
-    let outputScoringCards = [
+    let expectedScoringCards = [
         new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
@@ -49,10 +51,86 @@ test('checks for five of a kind hand', () => {
     ];
 
     let testOutput = checkHandType(hand, []);
-
-    let expectedOutput = {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: outputScoringCards};
+    let expectedOutput = {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: expectedScoringCards};
 
     expect(testOutput["handType"]).toBe(expectedOutput.handType);
-    expect(areCardArraysEqual(expectedOutput["scoringCards"], testOutput.scoringCards)).toBeTruthy();
-    expect(testOutput["handType"] === TypesAndPriority.FLUSH_FIVE).toBeFalsy();
+    expect(areCardArraysEqual(expectedScoringCards, testOutput.scoringCards)).toBeTruthy();
+    expect(testOutput["handType"] === TypesAndPriority.FLUSH_HOUSE).toBeFalsy();
 });
+
+test("Flush Five simple no jokers", () => {
+    //five cards of the same rank AND suit
+
+    let testCards= [
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
+
+test("Flush House simple no jokers", () => {
+    //3 cards of one rank, 2 cards of another, all 5 sharing the SAME SUIT
+
+    let testCards = [
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.FLUSH_HOUSE, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
+
+test("High Card simple one card no jokers", () => {
+    //just a single card
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.HIGH_CARD, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testCards, expectedScoringCards)).toBeTruthy();
+});
+
