@@ -15,12 +15,13 @@ import JokerCards from "../src/model/JokerCards/JokerDefs";
 import { expect, test } from "vitest";
 
 test('checks for five of a kind hand', () => {
-    let cardArrayInput = [];
-    cardArrayInput.push(new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE));
-    cardArrayInput.push(new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE));
-    cardArrayInput.push(new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE));
-    cardArrayInput.push(new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE));
-    cardArrayInput.push(new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE));
+    let cardArrayInput = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
 
     let hand = new PlayedHand(cardArrayInput);
 
@@ -36,5 +37,6 @@ test('checks for five of a kind hand', () => {
 
     let expectedOutput = {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: outputScoringCards};
 
-    expect(testOutput).toBe(expectedOutput);
+    expect(testOutput["handType"]).toBe(expectedOutput.handType);
+    expect(testOutput.scoringCards).toBe(expectedOutput["scoringCards"]);
 });

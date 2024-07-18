@@ -147,11 +147,19 @@ function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
+        /*
         for (const curr in playedHand.cards) {
             if (firstCard.rank !== curr.rank) {
                 return {isHand: false, scoringCards: []};
             }
         }
+         */
+
+        playedHand.cards.forEach(curr => {
+            if (firstCard.rank !== curr.rank) {
+                return {isHand: false, scoringCards: []};
+            }
+        });
 
         return {isHand: true, scoringCards: playedHand.cards};
     }
