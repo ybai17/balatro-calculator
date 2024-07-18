@@ -405,19 +405,105 @@ test("STRAIGHT simple", () => {
 });
 
 test("THREE_OF_A_KIND simple", () => {
-    //
+    //3 cards of one rank, can be different suits
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("THREE_OF_A_KIND 4 cards", () => {
+    //3 cards of one rank, can be different suits, this time with a played hand size of only 4 cards
 
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("THREE_OF_A_KIND 3 cards", () => {
+    //3 cards of one rank, can be different suits, this time with a played hand size of only 3 cards
 
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("TWO_PAIR simple", () => {
+    //2 cards of same rank + another 2 cards of same rank, can be different suits
 
+    let testCards = [
+        new PlayingCard(Ranks.SEVEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.TWO_PAIR, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("TWO_PAIR 4 cards", () => {

@@ -342,9 +342,7 @@ function isThreeOfAKind(playedHand, jokers) {
     for (const rankKey in uniqueRanksAndCounts) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
         if (currRankArray.length === 3) {
-            if (stoneCards.length !== 0) {
-                return {isHand: true, scoringCards: currRankArray.concat(stoneCards)};
-            }
+            return {isHand: true, scoringCards: currRankArray};
         }
     }
 
@@ -358,7 +356,7 @@ function isTwoPair(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    playedHand.cards.forEach((curr) => {
+    playedHand.cards.forEach((currCard) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
             return;
@@ -389,7 +387,7 @@ function isPair(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    playedHand.cards.forEach((curr) => {
+    playedHand.cards.forEach((currCard) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
             return;
