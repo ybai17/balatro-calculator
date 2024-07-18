@@ -168,7 +168,7 @@ function isStraightFlush(playedHand, jokers) {
     let flushCheck = isFlush(playedHand, jokers);
     if (flushCheck.isHand) {
 
-        let straightCheck = isStraight(flushCheck.scoringCards, jokers);
+        let straightCheck = isStraight(playedHand, jokers);
         return {isHand: straightCheck.isHand, scoringCards: straightCheck.scoringCards};
     }
 
