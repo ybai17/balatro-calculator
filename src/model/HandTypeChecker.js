@@ -119,11 +119,13 @@ function isFlushFive(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
-        playedHand.cards.forEach((curr) => {
+        for (let i = 1; i < 5; i++) {
+            let curr = playedHand.cards[i];
+
             if (firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) {
                 return {isHand: false, scoringCards: []};
             }
-        });
+        }
 
         return {isHand: true, scoringCards: playedHand.cards};
     }
@@ -147,11 +149,13 @@ function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
-        playedHand.cards.forEach(curr => {
+        for (let i = 1; i < 5; i++) {
+            let curr = playedHand.cards[i];
+
             if (firstCard.rank !== curr.rank) {
                 return {isHand: false, scoringCards: []};
             }
-        });
+        }
 
         return {isHand: true, scoringCards: playedHand.cards};
     }
