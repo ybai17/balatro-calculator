@@ -29,18 +29,18 @@ let high_card = new ScoreObject(5, 1);
 */
 
 const TypesAndScores = Object.freeze({
-    12: [160, 16],
-    11: [140, 14],
-    10: [120, 12],
-    9: [100, 8],
-    8: [60, 7],
-    7: [40, 4],
-    6: [35, 4],
-    5: [30, 4],
-    4: [30, 3],
-    3: [20, 2],
-    2: [10, 2],
-    1: [5, 1],
+    FLUSH_FIVE: [160, 16],
+    FLUSH_HOUSE: [140, 14],
+    FIVE_OF_A_KIND: [120, 12],
+    STRAIGHT_FLUSH: [100, 8],
+    FOUR_OF_A_KIND: [60, 7],
+    FULL_HOUSE: [40, 4],
+    FLUSH: [35, 4],
+    STRAIGHT: [30, 4],
+    THREE_OF_A_KIND: [30, 3],
+    TWO_PAIR: [20, 2],
+    PAIR: [10, 2],
+    HIGH_CARD: [5, 1],
 });
 
 export default TypesAndScores;
