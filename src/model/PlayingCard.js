@@ -32,6 +32,9 @@
  * Playing cards can only have one modifier of each type. Applying any edition, enhancement, or seal changes
  * overrides the previous one of the same type if it exists.
  * 
+ * Balatro is a game that allows you to have multiple copies of a card (e.g. have 2 Polychrome Queen of Spades).
+ * Thus, we need a way to check if two cards are similar, but still discern between them using unique ID's.
+ * 
  * ---------------------------------------------------
  * 
  * Playing cards all come with the standard 4 suits, but suit gets overriden if it has the Wild Card enhancement.
@@ -47,6 +50,7 @@ class PlayingCard {
 
     editionChipsModifier = 0;
     enhancementChipsModifier = 0;
+    uniqueID;
 
     constructor(rank, suit, edition, enhancement, seal) {
         this.rankField = rank;
@@ -54,6 +58,8 @@ class PlayingCard {
         this.editionField = edition;
         this.enhancementField = enhancement;
         this.sealField = seal;
+
+        this.uniqueID = "" + rank + suit + Date.now();
     }
 
     //getters and setters
@@ -117,6 +123,10 @@ class PlayingCard {
         }
     }
 
+    get id() {
+        return this.uniqueID;
+    }
+
     hasEdition() {
         if (this.edition === EditionTypes.NONE) {
             return false;
@@ -145,6 +155,21 @@ class PlayingCard {
         }
 
         if (this.enhancement === EnhancementTypes.WILD || cardTwo.enhancement === EnhancementTypes.WILD) {
+            return true;
+        }
+
+        return false;
+    }
+
+    //function for simply checking if two cards are similar (i.e. same rank, suit, modifiers)
+    //
+    isSameCardShallow(cardTwo) {
+        if (this.rank === cardTwo.rank &&
+            this.suit === cardTwo.suit &&
+            this.edition === cardTwo.edition &&
+            this.enhancement === cardTwo.enhancement &&
+            this.seal === cardTwo.seal) {
+
             return true;
         }
 
