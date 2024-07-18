@@ -373,6 +373,8 @@ function isTwoPair(playedHand, jokers) {
         }
     }
 
+    ranksWithPairArray.reverse(); //to keep higher rank cards first in the output array
+
     if (ranksWithPairArray.length == 4) {
         return {isHand: true, scoringCards: ranksWithPairArray};
     }
@@ -421,7 +423,7 @@ function isHighCard(playedHand, jokers) {
     for (let i = 0; i < playedHand.size; i++) {
         let currCompare = playedHand.cards[i];
 
-        if (highestCard.rank > currCompare.rank) {
+        if (currCompare.rank > highestCard.rank) {
             highestCard = currCompare;
         }
     }

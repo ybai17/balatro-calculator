@@ -493,10 +493,10 @@ test("TWO_PAIR simple", () => {
     let hand = new PlayedHand(testCards);
 
     let expectedScoringCards = [
-        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
         new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
     ];
 
     let testOutput = checkHandType(hand, []);
@@ -507,19 +507,127 @@ test("TWO_PAIR simple", () => {
 });
 
 test("TWO_PAIR 4 cards", () => {
+    //2 cards of same rank + another 2 cards of same rank, can be different suits
+    //this time with a played hand of 4 cards
 
+    let testCards = [
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.TWO_PAIR, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("PAIR simple", () => {
+    //2 cards with the same rank, but can be different suits
 
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.PAIR, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("PAIR 4 cards", () => {
-    
+    //2 cards with the same rank, but can be different suits
+    //this time with a played hand of size 4
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.PAIR, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("PAIR 2 cards", () => {
+    //2 cards with the same rank, but can be different suits
+    //this time with a played hand of size 2
 
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.PAIR, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
+
+test("HIGH_CARD simple", () => {
+    //need to test for a high card when no other hands can be found
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, []);
+    let expectedOutput = {handType: TypesAndPriority.HIGH_CARD, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
 test("HIGH_CARD 1 card", () => {
@@ -542,14 +650,15 @@ test("HIGH_CARD 1 card", () => {
     expect(areCardArraysEqual(testCards, expectedScoringCards)).toBeTruthy();
 });
 
-test("HIGH_CARD no other hands", () => {
-    //need to test for a high card when no other hands can be found
-
-    expect(false).toBe(true);
-});
-
 //---------------------------------------------
 //now test hands with the Four Fingers joker card, which allows for FLUSH and STRAIGHT (and STRAIGHT_FLUSH)
 //hands to be counted using only 4 cards instead of 5.
 //---------------------------------------------
 
+//---------------------------------------------
+//need to test hands that include STONE cards (which always score)
+//---------------------------------------------
+
+//---------------------------------------------
+//need to test hands that are played with the Four Fingers joker card + STONE cards
+//---------------------------------------------
