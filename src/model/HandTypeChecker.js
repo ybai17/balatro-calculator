@@ -119,11 +119,11 @@ function isFlushFive(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
 
-        for (const curr in playedHand.cards) {
+        playedHand.cards.forEach((curr) => {
             if (firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) {
                 return {isHand: false, scoringCards: []};
             }
-        }
+        });
 
         return {isHand: true, scoringCards: playedHand.cards};
     }
@@ -146,14 +146,6 @@ function isFlushHouse(playedHand, jokers) {
 function isFiveOfAKind(playedHand, jokers) {
     if (playedHand.size == 5) {
         let firstCard = playedHand.cards[0];
-
-        /*
-        for (const curr in playedHand.cards) {
-            if (firstCard.rank !== curr.rank) {
-                return {isHand: false, scoringCards: []};
-            }
-        }
-         */
 
         playedHand.cards.forEach(curr => {
             if (firstCard.rank !== curr.rank) {
@@ -187,13 +179,12 @@ function isFourOfAKind(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    for (const curr in playedHand.cards) {
-
+    playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr]; //store it as a scoring card
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
-    }
+    });
 
     for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
@@ -211,13 +202,12 @@ function isFullHouse(playedHand, jokers) {
 
         let uniqueRanksAndCounts = {};
 
-        for (const curr in playedHand.cards) {
-
+        playedHand.cards.forEach((curr) => {
             if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
                 uniqueRanksAndCounts[curr.rank] = 1;
             }
             uniqueRanksAndCounts[curr.rank] += 1;
-        }
+        });
 
         if (Object.keys(uniqueRanksAndCounts).length !== 2) {
             return {isHand: false, scoringCards: []};
@@ -249,13 +239,13 @@ function isFlush(playedHand, jokers) {
         SPADES: [],
     };
 
-    for (const currCard in playedHand.cards) {
+    playedHand.cards.forEach((currCard) => {
         if (currCard.enhancement === EnhancementTypes.WILD) {
             suitsAndCounts.CLUBS.push(currCard);
             suitsAndCounts.DIAMONDS.push(currCard);
             suitsAndCounts.HEARTS.push(currCard);
             suitsAndCounts.SPADES.push(currCard);
-            continue;
+            return;
         }
         switch (currCard.suit) {
             case Suits.CLUBS:
@@ -271,7 +261,7 @@ function isFlush(playedHand, jokers) {
                 suitsAndCounts.SPADES.push(currCard);
                 break;
         }
-    }
+    });
 
     for (const suitKey in Object.keys(suitsAndCounts)) {
         let currArray = suitsAndCounts[suitKey];
@@ -335,13 +325,12 @@ function isThreeOfAKind(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    for (const curr in playedHand.cards) {
-
+    playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(curr.rank)) {
             uniqueRanksAndCounts[curr.rank] = [curr];
         }
         uniqueRanksAndCounts[curr.rank].push(curr);
-    }
+    });
 
     for (const rankKey in Object.keys(uniqueRanksAndCounts)) {
         let currRankArray = uniqueRanksAndCounts[rankKey];
@@ -362,13 +351,12 @@ function isTwoPair(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    for (const currCard in playedHand.cards) {
-
+    playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
-    }
+    });
 
     let ranksWithPairArray = [];
 
@@ -393,13 +381,12 @@ function isPair(playedHand, jokers) {
 
     let uniqueRanksAndCounts = {};
 
-    for (const currCard in playedHand.cards) {
-
+    playedHand.cards.forEach((curr) => {
         if (!uniqueRanksAndCounts.hasOwnProperty(currCard.rank)) {
             uniqueRanksAndCounts[currCard.rank] = [currCard];
         }  
         uniqueRanksAndCounts[currCard.rank].push(currCard);
-    }
+    });
 
     let ranksWithPairArray = [];
 
