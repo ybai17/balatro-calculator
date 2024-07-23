@@ -11,7 +11,7 @@ import { EditionTypes, EnhancementTypes, SealTypes, Suits, Ranks } from "../src/
 import TypesAndPriority from "../src/model/HandTypesAndPriority";
 import PlayingCard from "../src/model/PlayingCard";
 import PlayedHand from "../src/model/PlayedHandObject";
-import JokerCards from "../src/model/JokerCards/JokerDefs";
+import { JokerDefs, JokerIDs } from "../src/model/JokerCards/JokerDefs";
 import { expect, test } from "vitest";
 
 //helper function for testing equality for arrays of PlayingCard objects
@@ -654,6 +654,94 @@ test("HIGH_CARD 1 card", () => {
 //now test hands with the Four Fingers joker card, which allows for FLUSH and STRAIGHT (and STRAIGHT_FLUSH)
 //hands to be counted using only 4 cards instead of 5.
 //---------------------------------------------
+
+test("FOUR_FINGERS simple STRAGHT_FLUSH", () => {
+    //testing a STRAIGHT_FLUSH with the FOUR_FINGERS joker card
+
+    let testCards = [
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let jokers = [JokerIDs.FOUR_FINGERS, JokerIDs.DROLL_JOKER, JokerIDs.HALF_JOKER];
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, jokers);
+    let expectedOutput = {handType: TypesAndPriority.STRAIGHT_FLUSH, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput["handType"]);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
+
+test("FOUR_FINGERS simple FLUSH", () => {
+    //testing a flush with the FOUR_FINGERS joker card, which allows flushes and straights to be counted
+    //using only 4 cards instead of 5
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let jokers = [JokerIDs.JOKER, JokerIDs.FOUR_FINGERS, JokerIDs.CRAZY_JOKER];
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.ACE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, jokers);
+    let expectedOutput = {handType: TypesAndPriority.FLUSH, scoringCards: expectedScoringCards};
+
+    expect(testOutput.handType).toBe(expectedOutput["handType"]);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
+
+test("FOUR_FINGERS simple STRAIGHT", () => {
+    //testing a straight hand using the FOUR_FINGERS joker card
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+
+    let jokers = [JokerIDs.LUSTY_JOKER, JokerIDs.DEVIOUS_JOKER, JokerIDs.FOUR_FINGERS,];
+
+    let expectedScoringCards = [
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let testOutput = checkHandType(hand, jokers);
+    let expectedOutput = {handType: TypesAndPriority.STRAIGHT, scoringCards: expectedScoringCards};
+
+    expect(testOutput["handType"]).toBe(expectedOutput.handType);
+    expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
+});
 
 //---------------------------------------------
 //need to test hands that include STONE cards (which always score)

@@ -9,7 +9,7 @@
 
 import { EnhancementTypes } from "./CardTypes";
 import TypesAndPriority from "./HandTypesAndPriority";
-import JokerCards from "./JokerCards/JokerDefs";
+import { JokerDefs, JokerIDs } from "./JokerCards/JokerDefs";
 import { Suits } from "./CardTypes";
 
 function checkHandType(playedHand, jokers) {
@@ -272,7 +272,7 @@ function isFlush(playedHand, jokers) {
     for (const suitKey in suitsAndCounts) {
         let currArray = suitsAndCounts[suitKey];
 
-        if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+        if (jokers.includes(JokerIDs.FOUR_FINGERS)) {
             if (currArray.length === 4) {
                 return {isHand: true, scoringCards: currArray};
             }
@@ -294,20 +294,20 @@ function isStraight(playedHand, jokers) {
 
     let handArray = playedHand.cards;
 
-    if (jokers.includes(JokerCards.FOUR_FINGERS)) {
+    if (jokers.includes(JokerIDs.FOUR_FINGERS)) {
         //todo: implement check for straight with a combo of 4 cards
         if (handArray[0].rank - handArray[1].rank === 1 &&
             handArray[1].rank - handArray[2].rank === 1 &&
             handArray[2].rank - handArray[3].rank === 1) {
             
-            return {isHand: true, scoringCards: playedHand.cards};
+            return {isHand: true, scoringCards: playedHand.cards.splice(0, 4)};
         }
 
         if (handArray[1].rank - handArray[2].rank === 1 &&
             handArray[2].rank - handArray[3].rank === 1 &&
             handArray[3].rank - handArray[4].rank === 1) {
             
-            return {isHand: true, scoringCards: playedHand.cards};
+            return {isHand: true, scoringCards: playedHand.cards.splice(1, 4)};
         }
     } else {
         //normal check with 5 cards

@@ -1,6 +1,6 @@
 import { createFactory } from "react";
 
-const JokerCards = Object.freeze({
+const JokerDefs = Object.freeze({
     JOKER: "+4 Mult",
     GREEDY_JOKER: "Played cards with Diamond suit give +3 Mult when scored",
     LUSTY_JOKER: "Played cards with Heart suit give +3 Mult when scored",
@@ -21,4 +21,25 @@ const JokerCards = Object.freeze({
     FOUR_FINGERS: "All Flushes and Straights can be made with 4 cards",
 });
 
-export default JokerCards;
+const JokerIDs = Object.freeze({
+    JOKER: 0,
+    GREEDY_JOKER: 1,
+    LUSTY_JOKER: 2,
+    WRATHFUL_JOKER: 3,
+    GLUTTONOUS_JOKER: 4,
+    JOLLY_JOKER: 5,
+    ZANY_JOKER: 6,
+    MAD_JOKER: 7,
+    CRAZY_JOKER: 8,
+    DROLL_JOKER: 9,
+    SLY_JOKER: 10,
+    WILY_JOKER: 11,
+    CLEVER_JOKER: 12,
+    DEVIOUS_JOKER: 13,
+    CRAFTY_JOKER: 14,
+    HALF_JOKER: 15,
+    JOKER_STENCIL: 16,
+    FOUR_FINGERS: 17,
+});
+
+export {JokerDefs, JokerIDs};
