@@ -38,7 +38,7 @@ const HandTypePriorities = Object.freeze({
  * 
  * The keys are numbers such that their values can be accessed using TypesAndPriority like an enum.
  * 
- * Ex: TypesAndScores[TypesAndPriorities.FLUSH] gets the Chips and Mult array for a FLUSH hand
+ * Ex: HandTypeScores[HandTypePriorities.FLUSH] gets the Chips and Mult array for a FLUSH hand
  */
 
 const HandTypeScores = Object.freeze({
