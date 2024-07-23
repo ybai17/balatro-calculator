@@ -42,18 +42,18 @@ const HandTypePriorities = Object.freeze({
  */
 
 const HandTypeScores = Object.freeze({
-    12: [160, 16],
-    11: [140, 14],
-    10: [120, 12],
-    9: [100, 8],
-    8: [60, 7],
-    7: [40, 4],
-    6: [35, 4],
-    5: [30, 4],
-    4: [30, 3],
-    3: [20, 2],
-    2: [10, 2],
-    1: [5, 1],
+    12: [160, 16], //FLUSH_FIVE
+    11: [140, 14], //FLUSH_HOUSE
+    10: [120, 12], //FIVE_OF_A_KIND
+    9: [100, 8], //STRAIGHT_FLUSH
+    8: [60, 7], //FOUR_OF_A_KIND
+    7: [40, 4], //FULL_HOUSE
+    6: [35, 4], //FLUSH
+    5: [30, 4], //STRAIGHT
+    4: [30, 3], //THREE_OF_A_KIND
+    3: [20, 2], //TWO_PAIR
+    2: [10, 2], //PAIR
+    1: [5, 1], //HIGH_CARD
 });
 
 export { HandTypePriorities, HandTypeScores };

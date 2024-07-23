@@ -36,16 +36,16 @@ const PlanetCards = Object.freeze({
  * Ex: PlanetBoosts[PlanetCards.VENUS] gets the Chips and Mult array for VENUS
 */
 const PlanetBoosts = Object.freeze({
-    12: [],
-    11: [],
-    10: [],
-    9: [],
-    8: [],
-    7: [],
-    6: [],
-    5: [],
-    4: [],
-    3: [],
-    2: [],
-    1: [],
+    12: [3, 50], //ERIS, FLUSH_FIVE
+    11: [4, 40], //CERES, FLUSH_HOUSE
+    10: [3, 35], //PLANET_X, FIVE_OF_A_KIND
+    9: [4, 40], //NEPTUNE, STRAIGHT_FLUSH
+    8: [3, 30], //MARS, FOUR_OF_A_KIND
+    7: [2, 25], //EARTH, FULL_HOUSE
+    6: [2, 15], //JUPITER, FLUSH
+    5: [3, 30], //SATURN, STRAIGHT
+    4: [2, 20], //VENUS, THREE_OF_A_KIND
+    3: [1, 20], //URANUS, TWO_PAIR
+    2: [1, 15], //MERCURY, PAIR
+    1: [1, 10], //PLUTO, HIGH_CARD
 });
