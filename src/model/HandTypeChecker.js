@@ -17,16 +17,27 @@ function checkHandType(playedHand, jokers) {
     //what if we just clear out the stone cards here first, to avoid repetition in each function checking for them?
     let stoneCards = [];
 
+    //stone cards are always scored last
     for (let i = 0; i < playedHand.size; i++) {
         let currCard = playedHand.cards[i];
         if (currCard.enhancement === EnhancementTypes.STONE) {
             stoneCards.push(currCard);
-            playedHand.cards.splice(i, 1);
         }
     }
 
+    playedHand.cards = playedHand.cards.filter((currCard) => 
+        currCard.enhancement != EnhancementTypes.STONE
+    );
+
+    playedHand.size = playedHand.size - stoneCards.length;
+
     //sort cards in descending order ahead of time for convenience
     playedHand.cards = playedHand.cards.sort((cardA, cardB) => {
+        return cardB.rank - cardA.rank;
+    });
+
+    //sort stone cards in descending order as well, and remember that they are always scored last
+    stoneCards.sort((cardA, cardB) => {
         return cardB.rank - cardA.rank;
     });
 
@@ -78,7 +89,10 @@ function checkHandType(playedHand, jokers) {
 
     handCheck = isFourOfAKind(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        handCheck.scoringCards = handCheck.scoringCards.concat(stoneCards);
+        //handCheck.scoringCards.sort((cardA, cardB) => {return cardB.rank - cardA.rank});
+
+        return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
     }
 
     handCheck = isFlush(playedHand, jokers);
