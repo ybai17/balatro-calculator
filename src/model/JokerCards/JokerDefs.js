@@ -1,3 +1,8 @@
+/**
+ * This file has two objects, one which contains mappings between the Joker cards and their functions as Strings,
+ * as well as the Joker cards and their actual IDs for use in comparisons.
+ */
+
 const JokerDefs = Object.freeze({
     JOKER: "+4 Mult",
     GREEDY_JOKER: "Played cards with Diamond suit give +3 Mult when scored",
