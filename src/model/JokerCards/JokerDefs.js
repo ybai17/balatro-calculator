@@ -1,5 +1,3 @@
-import { createFactory } from "react";
-
 const JokerDefs = Object.freeze({
     JOKER: "+4 Mult",
     GREEDY_JOKER: "Played cards with Diamond suit give +3 Mult when scored",
