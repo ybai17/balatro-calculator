@@ -8,7 +8,7 @@
  */
 
 import { EnhancementTypes } from "./CardTypes";
-import TypesAndPriority from "./HandTypesAndPriority";
+import { HandTypePriorities } from "./HandTypeDefs";
 import { JokerDefs, JokerIDs } from "./JokerCards/JokerDefs";
 import { Suits } from "./CardTypes";
 
@@ -46,45 +46,45 @@ function checkHandType(playedHand, jokers) {
 
     //for speed, checks for small hand sizes will go first
     if (playedHand.size === 1) {
-        return {handType: TypesAndPriority.HIGH_CARD, scoringCards: playedHand.cards};
+        return {handType: HandTypePriorities.HIGH_CARD, scoringCards: playedHand.cards};
     } else if (playedHand.size === 2) {
         handCheck = isPair(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
     } else if (playedHand.size === 3) {
         handCheck = isThreeOfAKind(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
     }
 
     if (playedHand.size === 5) {
         handCheck = isFlushFive(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FLUSH_FIVE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.FLUSH_FIVE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFlushHouse(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FLUSH_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.FLUSH_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFiveOfAKind(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
 
         handCheck = isFullHouse(playedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: TypesAndPriority.FULL_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            return {handType: HandTypePriorities.FULL_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
         }
     }
     
     handCheck = isStraightFlush(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.STRAIGHT_FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.STRAIGHT_FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isFourOfAKind(playedHand, jokers);
@@ -92,36 +92,36 @@ function checkHandType(playedHand, jokers) {
         handCheck.scoringCards = handCheck.scoringCards.concat(stoneCards);
         //handCheck.scoringCards.sort((cardA, cardB) => {return cardB.rank - cardA.rank});
 
-        return {handType: TypesAndPriority.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
+        return {handType: HandTypePriorities.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
     }
 
     handCheck = isFlush(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isStraight(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.STRAIGHT, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.STRAIGHT, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isThreeOfAKind(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isTwoPair(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.TWO_PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.TWO_PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isPair(playedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: TypesAndPriority.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        return {handType: HandTypePriorities.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
     }
 
     handCheck = isHighCard(playedHand, jokers);
-    return {handType: TypesAndPriority.HIGH_CARD, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+    return {handType: HandTypePriorities.HIGH_CARD, scoringCards: handCheck.scoringCards.concat(stoneCards)};
 }
 
 //-----------------------------------------

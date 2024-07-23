@@ -8,7 +8,7 @@
 
 import checkHandType from "../src/model/HandTypeChecker";
 import { EditionTypes, EnhancementTypes, SealTypes, Suits, Ranks } from "../src/model/CardTypes";
-import TypesAndPriority from "../src/model/HandTypesAndPriority";
+import { HandTypePriorities } from "../src/model/HandTypeDefs";
 import PlayingCard from "../src/model/PlayingCard";
 import PlayedHand from "../src/model/PlayedHandObject";
 import { JokerDefs, JokerIDs } from "../src/model/JokerCards/JokerDefs";
@@ -54,7 +54,7 @@ test("FLUSH_FIVE simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FIVE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FIVE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -81,7 +81,7 @@ test("FLUSH_HOUSE simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH_HOUSE);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH_HOUSE);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -108,9 +108,9 @@ test('FIVE_OF_A_KIND simple', () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput["handType"]).toBe(TypesAndPriority.FIVE_OF_A_KIND);
+    expect(testOutput["handType"]).toBe(HandTypePriorities.FIVE_OF_A_KIND);
     expect(areCardArraysEqual(expectedScoringCards, testOutput.scoringCards)).toBeTruthy();
-    expect(testOutput["handType"] === TypesAndPriority.FLUSH_HOUSE).toBeFalsy();
+    expect(testOutput["handType"] === HandTypePriorities.FLUSH_HOUSE).toBeFalsy();
 });
 
 test("STRAIGHT_FLUSH simple", () => {
@@ -137,7 +137,7 @@ test("STRAIGHT_FLUSH simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.STRAIGHT_FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.STRAIGHT_FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -166,7 +166,7 @@ test("STRAIGHT_FLUSH simple ROYAL FLUSH", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.STRAIGHT_FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.STRAIGHT_FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -193,7 +193,7 @@ test("FOUR_OF_A_KIND simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FOUR_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FOUR_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -220,7 +220,7 @@ test("FOUR_OF_A_KIND priority > FLUSH", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FOUR_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FOUR_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -247,7 +247,7 @@ test("FULL_HOUSE simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput["handType"]).toBe(TypesAndPriority.FULL_HOUSE);
+    expect(testOutput["handType"]).toBe(HandTypePriorities.FULL_HOUSE);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -275,7 +275,7 @@ test("FLUSH simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -303,7 +303,7 @@ test("FLUSH priority > THREE_OF_A_KIND", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -331,7 +331,7 @@ test("FLUSH priority > TWO_PAIR", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -359,7 +359,7 @@ test("FLUSH priority > PAIR", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -387,7 +387,7 @@ test("STRAIGHT simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.STRAIGHT);
+    expect(testOutput.handType).toBe(HandTypePriorities.STRAIGHT);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -412,7 +412,7 @@ test("THREE_OF_A_KIND simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -436,7 +436,7 @@ test("THREE_OF_A_KIND 4 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -459,7 +459,7 @@ test("THREE_OF_A_KIND 3 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -485,7 +485,7 @@ test("TWO_PAIR simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.TWO_PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.TWO_PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -511,7 +511,7 @@ test("TWO_PAIR 4 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.TWO_PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.TWO_PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -535,7 +535,7 @@ test("PAIR simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -559,7 +559,7 @@ test("PAIR 4 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -581,7 +581,7 @@ test("PAIR 2 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -604,7 +604,7 @@ test("HIGH_CARD simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.HIGH_CARD);
+    expect(testOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -623,7 +623,7 @@ test("HIGH_CARD 1 card", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.HIGH_CARD);
+    expect(testOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(areCardArraysEqual(testCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -655,7 +655,7 @@ test("FOUR_FINGERS simple STRAGHT_FLUSH", () => {
 
     let testOutput = checkHandType(hand, jokers);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.STRAIGHT_FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.STRAIGHT_FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -683,7 +683,7 @@ test("FOUR_FINGERS simple FLUSH", () => {
 
     let testOutput = checkHandType(hand, jokers);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FLUSH);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -710,7 +710,7 @@ test("FOUR_FINGERS simple STRAIGHT", () => {
 
     let testOutput = checkHandType(hand, jokers);
 
-    expect(testOutput["handType"]).toBe(TypesAndPriority.STRAIGHT);
+    expect(testOutput["handType"]).toBe(HandTypePriorities.STRAIGHT);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -742,7 +742,7 @@ test("FOUR_OF_A_KIND + stone", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FOUR_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FOUR_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -770,7 +770,7 @@ test("FOUR_OF_A_KIND + stone instead of FIVE_OF_A_KIND", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.FOUR_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FOUR_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -796,7 +796,7 @@ test("THREE_OF_A_KIND + 1 stone", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -823,7 +823,7 @@ test("THREE_OF_A_KIND + 2 stones", () => {
 
     let testOutput = checkHandType(hand, []);
     
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -849,7 +849,7 @@ test("THREE_OF_A_KIND + 1 stone, 4 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.THREE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -876,7 +876,7 @@ test("TWO_PAIR + 1 stone card", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.TWO_PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.TWO_PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
@@ -901,7 +901,7 @@ test("PAIR + 1 stone card", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 
@@ -928,7 +928,7 @@ test("PAIR + 3 stone cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 
@@ -951,7 +951,7 @@ test("PAIR + 1 stone card, 3 cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.PAIR);
+    expect(testOutput.handType).toBe(HandTypePriorities.PAIR);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 
@@ -978,7 +978,7 @@ test("HIGH_CARD + 4 stone cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.HIGH_CARD);
+    expect(testOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 
@@ -1005,7 +1005,7 @@ test("HIGH_CARD only 5 stone cards", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.HIGH_CARD);
+    expect(testOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 
@@ -1024,7 +1024,7 @@ test("HIGH_CARD only 1 stone card", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(TypesAndPriority.HIGH_CARD);
+    expect(testOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards));
 });
 

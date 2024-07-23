@@ -9,7 +9,7 @@
  * various hand types), and various joker effects.
  */
 
-import TypesAndPriority from "./HandTypesAndPriority";
+import TypesAndPriority from "./HandTypeDefs";
 import TypesAndScores from "./HandTypesAndBaseScores";
 
 class ScoreObject {
