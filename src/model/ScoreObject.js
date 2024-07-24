@@ -49,7 +49,7 @@ class ScoreObject {
         //do nothing for now
     }
 
-    getFinalScore() {
+    getFinalScoreValues() {
         this.activateJokers();
         this.activatePlayingCardEffects();
 
