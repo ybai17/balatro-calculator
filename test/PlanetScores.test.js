@@ -114,3 +114,36 @@ test("FLUSH_HOUSE Level 1", () => {
     expect(testChips).toBe(180);
     expect(testMult).toBe(14);
 });
+
+test("FLUSH_HOUSE Level 2", () => {
+    //testing FLUSH_HOUSE scoring after being upgraded once
+
+    let testCards = [
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.CERES, PlanetEditions.NONE);
+
+    tracker.playPlanetCard(testPlanet);
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH_HOUSE);
+    expect(testChips).toBe(220);
+    expect(testMult).toBe(18);
+});
+
