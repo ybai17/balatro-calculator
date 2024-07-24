@@ -10,7 +10,7 @@
 
 import ScoreObject from "../src/model/ScoreObject";
 import checkHandType from "../src/model/HandTypeChecker";
-import { HandTypePriorities, HandTypeScores } from "../src/model/HandTypeDefs";
+import { HandTypePriorities} from "../src/model/HandTypeDefs";
 
 import PlanetCard from "../src/model/PlanetCards/PlanetCard";
 import { PlanetTypes, PlanetBoosts, PlanetEditions, PlanetTracker } from "../src/model/PlanetCards/PlanetDefs";
@@ -51,4 +51,37 @@ test("FLUSH_FIVE simple Level 1", () => {
     expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH_FIVE);
     expect(testChips).toBe(215);
     expect(testMult).toBe(16);
+});
+
+test("FLUSH_FIVE simple Level 3", () => {
+    //testing FLUSH_FIVE scoring values once 2 ERIS planet cards have been played
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.ERIS, PlanetEditions.NONE);
+
+    tracker.playPlanetCard(testPlanet);
+    tracker.playPlanetCard(testPlanet);
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+    
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH_FIVE);
+    expect(testChips).toBe(315);
+    expect(testMult).toBe(22);
 });
