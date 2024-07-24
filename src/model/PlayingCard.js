@@ -132,24 +132,15 @@ class PlayingCard {
     }
 
     hasEdition() {
-        if (this.edition === EditionTypes.NONE) {
-            return false;
-        }
-        return true;
+        return this.edition !== EditionTypes.NONE;
     }
 
     hasEnhancement() {
-        if (this.enhancement === EnhancementTypes.NONE) {
-            return false;
-        }
-        return true;
+        return this.edition !== EnhancementTypes.NONE;
     }
 
     hasSeal() {
-        if (this.seal === SealTypes.NONE) {
-            return false;
-        }
-        return true;
+        return this.seal !== SealTypes.NONE;
     }
 
     //helper function for comparing suits of two cards, taking wild cards into account
