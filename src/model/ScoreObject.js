@@ -9,7 +9,7 @@
  * various hand types), and various joker effects.
  */
 
-import { HandTypePriorities, HandTypeScores } from "./HandTypeDefs";
+import { HandTypePriorities } from "./HandTypeDefs";
 import { PlanetTracker } from "./PlanetCards/PlanetDefs";
 
 class ScoreObject {
@@ -46,7 +46,12 @@ class ScoreObject {
 
     activatePlayingCardEffects() {
         //editions, enhancements, seals
-        //do nothing for now
+        
+        //factor in each card's base score values
+
+        this.scoringCards.forEach((currCard) => {
+            this.chipsField += currCard.getChipsForScoring();
+        });
     }
 
     getFinalScoreValues() {
