@@ -147,3 +147,66 @@ test("FLUSH_HOUSE Level 2", () => {
     expect(testMult).toBe(18);
 });
 
+test("FIVE_OF_A_KIND Level 1", () => {
+    //test FIVE_OF_A_KIND without level ups
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FIVE_OF_A_KIND);
+    expect(testChips).toBe(130);
+    expect(testMult).toBe(12);
+});
+
+test("FIVE_OF_A_KIND Level 4", () => {
+    //test FIVE_OF_A_KIND without level ups
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.PLANET_X, PlanetEditions.NONE);
+
+    tracker.playPlanetCard(testPlanet);
+    tracker.playPlanetCard(testPlanet);
+    tracker.playPlanetCard(testPlanet);
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FIVE_OF_A_KIND);
+    expect(testChips).toBe(235);
+    expect(testMult).toBe(21);
+});
+
