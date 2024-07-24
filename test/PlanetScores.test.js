@@ -24,7 +24,7 @@ import PlayedHand from "../src/model/PlayedHandObject";
 
 import { expect, test } from "vitest";
 
-test("FLUSH_FIVE simple Level 1", () => {
+test("FLUSH_FIVE Level 1", () => {
     //testing the score values for a simple FLUSH_FIVE hand
 
     let testCards = [
@@ -53,7 +53,7 @@ test("FLUSH_FIVE simple Level 1", () => {
     expect(testMult).toBe(16);
 });
 
-test("FLUSH_FIVE simple Level 3", () => {
+test("FLUSH_FIVE Level 3", () => {
     //testing FLUSH_FIVE scoring values once 2 ERIS planet cards have been played
 
     let testCards = [
@@ -84,4 +84,33 @@ test("FLUSH_FIVE simple Level 3", () => {
     expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH_FIVE);
     expect(testChips).toBe(315);
     expect(testMult).toBe(22);
+});
+
+test("FLUSH_HOUSE Level 1", () => {
+    //check a simple FLUSH_HOUSE hand
+
+    let testCards = [
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH_HOUSE);
+    expect(testChips).toBe(180);
+    expect(testMult).toBe(14);
 });

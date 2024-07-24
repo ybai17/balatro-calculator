@@ -117,13 +117,25 @@ class PlayingCard {
             return this.editionChipsModifier + this.enhancementChipsModifier;
         }
 
-        switch(this.rank) {
-            case 2, 3, 4, 5, 6, 7, 8, 9, 10:
-                return this.rank + this.editionChipsModifier + this.enhancementChipsModifier;
-            case 11, 12, 13:
+        switch(this.rankField) {
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                return this.rankField + this.editionChipsModifier + this.enhancementChipsModifier;
+            case 11:
+            case 12:
+            case 13:
                 return 10 + this.editionChipsModifier + this.enhancementChipsModifier;
             case 14:
                 return 11 + this.editionChipsModifier + this.enhancementChipsModifier;
+            default:
+                return Math.min();
         }
     }
 
