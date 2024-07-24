@@ -54,7 +54,7 @@ test("FLUSH_FIVE simple", () => {
 
     let testOutput = checkHandType(hand, []);
 
-    expect(testOutput.handType).toBe(HandTypePriorities.FIVE_OF_A_KIND);
+    expect(testOutput.handType).toBe(HandTypePriorities.FLUSH_FIVE);
     expect(areCardArraysEqual(testOutput.scoringCards, expectedScoringCards)).toBeTruthy();
 });
 
