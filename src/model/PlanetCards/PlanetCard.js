@@ -10,8 +10,11 @@ class PlanetCard {
     planetCardType;
     cardEditionType;
 
-    //planetType is one of the PlanetTypes from PlanetDefs
-    //editionType is one of the PlanetEditions from PlanetDefs
+    /**
+     * Create a PlanetCard. 
+     * @param {PlanetTypes} planetType the type of planet card
+     * @param {PlanetEditions} editionType the edition of this planet card
+     */
     constructor(planetType, editionType) {
         this.planetCardType = planetType;
         this.cardEditionType = editionType;
