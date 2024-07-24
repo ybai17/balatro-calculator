@@ -9,8 +9,7 @@
  * various hand types), and various joker effects.
  */
 
-import TypesAndPriority from "./HandTypeDefs";
-import TypesAndScores from "./HandTypesAndBaseScores";
+import { HandTypePriorities, HandTypeScores } from "./HandTypeDefs";
 
 class ScoreObject {
 
@@ -21,8 +20,8 @@ class ScoreObject {
         this.handType = handTypeAndScoringCards.handType;
         this.scoringCards = handTypeAndScoringCards.scoringCards;
 
-        this.chips = TypesAndScores[this.handType][0];
-        this.multiplier = TypesAndScores[this.handType][1];
+        this.chips = HandTypeScores[this.handType][0];
+        this.multiplier = HandTypeScores[this.handType][1];
     }
 
     setChips(newAmount) {
