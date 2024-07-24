@@ -136,7 +136,7 @@ function isFlushFive(playedHand, jokers) {
         for (let i = 1; i < 5; i++) {
             let curr = playedHand.cards[i];
 
-            if (firstCard.rank != curr || !firstCard.areSuitsEqual(curr)) {
+            if (firstCard.rank != curr.rank || !firstCard.areSuitsEqual(curr)) {
                 return {isHand: false, scoringCards: []};
             }
         }
