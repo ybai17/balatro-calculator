@@ -10,42 +10,50 @@
  */
 
 import { HandTypePriorities, HandTypeScores } from "./HandTypeDefs";
+import { PlanetTracker } from "./PlanetCards/PlanetDefs";
 
 class ScoreObject {
 
     handType;
     scoringCards = [];
+    jokerCards = [];
+    planetTracker;
 
-    constructor(handTypeAndScoringCards) {
-        this.handType = handTypeAndScoringCards.handType;
-        this.scoringCards = handTypeAndScoringCards.scoringCards;
+    chipsField;
+    multiplierField;
 
-        this.chips = HandTypeScores[this.handType][0];
-        this.multiplier = HandTypeScores[this.handType][1];
+    /**
+     * Constructs a scoring object.
+     * 
+     * @param {HandTypePriorities} handType the type of hand being played
+     * @param {Array} scoringCards the array of cards that will count for scoring 
+     * @param {Array} jokers the array of jokers currently in play
+     * @param {PlanetTracker} planetTracker the planet tracker managing the levels of each hand type
+     */
+    constructor(handType, scoringCards, jokers, planetTracker) {
+        this.handType = handType;
+        this.scoringCards = scoringCards;
+        this.jokerCards = jokers;
+        this.planetTracker = planetTracker;
+
+        //it will start with the updated score values based on the hand type levels
+        [this.chipsField, this.multiplierField] = planetTracker.getHandBaseScore(this.handType);
     }
 
-    setChips(newAmount) {
-        this.chips = newAmount;
-    }
-
-    setMultiplier(newAmount) {
-        this.multiplier = newAmount;
-    }
-
-    activateJokers(jokers) {
-
-    }
-
-    activatePlanets(currentHandLevels) {
-
+    activateJokers() {
+        //do nothing for now
     }
 
     activatePlayingCardEffects() {
-        //editions, enhancements, seals, 
+        //editions, enhancements, seals
+        //do nothing for now
     }
 
-    get finalScore() {
-        return this.chips * this.multiplier;
+    getFinalScore() {
+        this.activateJokers();
+        this.activatePlayingCardEffects();
+
+        return [this.chipsField, this.multiplierField];
     }
 }
 
