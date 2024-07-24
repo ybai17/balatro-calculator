@@ -67,9 +67,14 @@ const PlanetEditions = Object.freeze({
 class PlanetTracker {
 
     handScores = {};
+    handLevels = {};
 
     constructor() {
         Object.assign(this.handScores, HandTypeScores);
+
+        for (let i = 12; i > 0; i--) {
+            this.handLevels[i] = 1;
+        }
     }
 
     /**
@@ -81,61 +86,84 @@ class PlanetTracker {
             case PlanetTypes.ERIS:
                 this.handScores[HandTypePriorities.FLUSH_FIVE][0] += PlanetBoosts.ERIS[0];
                 this.handScores[HandTypePriorities.FLUSH_FIVE][1] += PlanetBoosts.ERIS[1];
+                this.handLevels[HandTypePriorities.FLUSH_FIVE] += 1;
                 break;
             case PlanetTypes.CERES:
                 this.handScores[HandTypePriorities.FLUSH_HOUSE][0] += PlanetBoosts.CERES[0];
                 this.handScores[HandTypePriorities.FLUSH_HOUSE][1] += PlanetBoosts.CERES[1];
+                this.handLevels[HandTypePriorities.FLUSH_HOUSE] += 1;
                 break;
             case PlanetTypes.PLANET_X:
                 this.handScores[HandTypePriorities.FIVE_OF_A_KIND][0] += PlanetBoosts.PLANET_X[0];
                 this.handScores[HandTypePriorities.FIVE_OF_A_KIND][1] += PlanetBoosts.PLANET_X[1];
+                this.handLevels[HandTypePriorities.FIVE_OF_A_KIND] += 1;
                 break;
             case PlanetTypes.NEPTUNE:
                 this.handScores[HandTypePriorities.STRAIGHT_FLUSH][0] += PlanetBoosts.NEPTUNE[0];
                 this.handScores[HandTypePriorities.STRAIGHT_FLUSH][1] += PlanetBoosts.NEPTUNE[1];
+                this.handLevels[HandTypePriorities.STRAIGHT_FLUSH] += 1;
                 break;
             case PlanetTypes.MARS:
                 this.handScores[HandTypePriorities.FOUR_OF_A_KIND][0] += PlanetBoosts.MARS[0];
                 this.handScores[HandTypePriorities.FOUR_OF_A_KIND][1] += PlanetBoosts.MARS[1];
+                this.handLevels[HandTypePriorities.FOUR_OF_A_KIND] += 1;
                 break;
             case PlanetTypes.EARTH:
                 this.handScores[HandTypePriorities.FULL_HOUSE][0] += PlanetBoosts.EARTH[0];
                 this.handScores[HandTypePriorities.FULL_HOUSE][1] += PlanetBoosts.EARTH[1];
+                this.handLevels[HandTypePriorities.FULL_HOUSE] += 1;
                 break;
             case PlanetTypes.JUPITER:
                 this.handScores[HandTypePriorities.FLUSH][0] += PlanetBoosts.JUPITER[0];
                 this.handScores[HandTypePriorities.FLUSH][1] += PlanetBoosts.JUPITER[1];
+                this.handLevels[HandTypePriorities.FLUSH] += 1;
                 break;
             case PlanetTypes.SATURN:
                 this.handScores[HandTypePriorities.STRAIGHT][0] += PlanetBoosts.SATURN[0];
                 this.handScores[HandTypePriorities.STRAIGHT][1] += PlanetBoosts.SATURN[1];
+                this.handLevels[HandTypePriorities.STRAIGHT] += 1;
                 break;
             case PlanetTypes.VENUS:
                 this.handScores[HandTypePriorities.THREE_OF_A_KIND][0] += PlanetBoosts.VENUS[0];
                 this.handScores[HandTypePriorities.THREE_OF_A_KIND][1] += PlanetBoosts.VENUS[1];
+                this.handLevels[HandTypePriorities.THREE_OF_A_KIND] += 1;
                 break;
             case PlanetTypes.URANUS:
                 this.handScores[HandTypePriorities.TWO_PAIR][0] += PlanetBoosts.URANUS[0];
                 this.handScores[HandTypePriorities.TWO_PAIR][1] += PlanetBoosts.URANUS[1];
+                this.handLevels[HandTypePriorities.TWO_PAIR] += 1;
                 break;
             case PlanetTypes.MERCURY:
                 this.handScores[HandTypePriorities.PAIR][0] += PlanetBoosts.MERCURY[0];
                 this.handScores[HandTypePriorities.PAIR][1] += PlanetBoosts.MERCURY[1];
+                this.handLevels[HandTypePriorities.PAIR] += 1;
                 break;
             case PlanetTypes.PLUTO:
                 this.handScores[HandTypePriorities.HIGH_CARD][0] += PlanetBoosts.PLUTO[0];
                 this.handScores[HandTypePriorities.HIGH_CARD][1] += PlanetBoosts.PLUTO[1];
+                this.handLevels[HandTypePriorities.HIGH_CARD] += 1;
                 break;
         }
     }
 
     /**
+     * Get base score values for a specific hand type.
      * 
-     * @param {HandTypePriorities} handType 
+     * @param {HandTypePriorities} handType the type of hand
      * @returns {Array} an array of two values: [Chips, Mult] to be used for calculating score
      */
     getHandBaseScore(handType) {
         return this.handScores[handType];
+    }
+
+    /**
+     * Get the level of a specific hand type.
+     * 
+     * @param {HandTypePriorities} handType the type of hand
+     * @returns {Number} the level, as a number, of the hand (starting from Level 1)
+     */
+    getLevelForHand(handType) {
+        return this.handLevels[handType];
     }
 }
 
