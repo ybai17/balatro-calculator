@@ -407,3 +407,68 @@ test("FULL_HOUSE Level 3", () => {
     expect(tracker.getLevelForHand(HandTypePriorities.FULL_HOUSE)).toBe(3);
 });
 
+test("FLUSH Level 1", () => {
+    //FLUSH without leveling up
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH);
+    expect(testChips).toBe(68);
+    expect(testMult).toBe(4);
+    expect(tracker.getLevelForHand(HandTypePriorities.FLUSH)).toBe(1);
+});
+
+test("FLUSH Level 4", () => {
+    //FLUSH without leveling up
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.JUPITER, PlanetEditions.NONE);
+
+    tracker.playPlanetCard(testPlanet);
+    tracker.playPlanetCard(testPlanet);
+    tracker.playPlanetCard(testPlanet);
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.FLUSH);
+    expect(testChips).toBe(113);
+    expect(testMult).toBe(10);
+    expect(tracker.getLevelForHand(HandTypePriorities.FLUSH)).toBe(4);
+});
+
