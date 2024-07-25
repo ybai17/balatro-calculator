@@ -48,8 +48,7 @@ import { EditionTypes, EnhancementTypes, SealTypes } from "./CardTypes";
 
 class PlayingCard {
 
-    editionChipsModifier = 0;
-    enhancementChipsModifier = 0;
+    jokerChipsModifierField = 0;
     uniqueID;
 
     constructor(rank, suit, edition, enhancement, seal) {
@@ -109,13 +108,13 @@ class PlayingCard {
         this.sealField = newSeal;
     }
 
+    set chipsModifer(newVal) {
+        this.jokerChipsModifierField += newVal;
+    }
+
     //-----------------------------------------------------------
 
     getChipsForScoring() {
-
-        if (this.enhancement === EnhancementTypes.STONE) {
-            return this.editionChipsModifier + this.enhancementChipsModifier;
-        }
 
         switch(this.rankField) {
             case 2:
@@ -127,13 +126,13 @@ class PlayingCard {
             case 8:
             case 9:
             case 10:
-                return this.rankField + this.editionChipsModifier + this.enhancementChipsModifier;
+                return this.rankField + this.jokerChipsModifierField;
             case 11:
             case 12:
             case 13:
-                return 10 + this.editionChipsModifier + this.enhancementChipsModifier;
+                return 10 + this.jokerChipsModifierField;
             case 14:
-                return 11 + this.editionChipsModifier + this.enhancementChipsModifier;
+                return 11 + this.jokerChipsModifierField;
             default:
                 return Math.min();
         }

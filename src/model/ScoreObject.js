@@ -9,6 +9,7 @@
  * various hand types), and various joker effects.
  */
 
+import { EditionTypes } from "./CardTypes";
 import { HandTypePriorities } from "./HandTypeDefs";
 import { PlanetTracker } from "./PlanetCards/PlanetDefs";
 
@@ -51,6 +52,19 @@ class ScoreObject {
 
         this.scoringCards.forEach((currCard) => {
             this.chipsField += currCard.getChipsForScoring();
+            
+            //check for edition effects
+            switch (currCard.edition) {
+                case EditionTypes.FOIL:
+                    this.chipsField += 50;
+                    break;
+                case EditionTypes.HOLOGRAPHIC:
+                    this.multiplierField += 10;
+                    break;
+                case EditionTypes.POLYCHROME:
+                    this.multiplierField *= 1.5;
+                    break;
+            }
         });
     }
 
