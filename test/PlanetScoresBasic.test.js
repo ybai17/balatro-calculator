@@ -731,7 +731,7 @@ test("PAIR Level 10", () => {
 });
 
 test("HIGH_CARD Level 1", () => {
-    //PAIR with 98 PLUTO cards played
+    //HIGH_CARD without leveling
 
     let testCards = [
         new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
