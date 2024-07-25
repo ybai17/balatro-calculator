@@ -472,3 +472,325 @@ test("FLUSH Level 4", () => {
     expect(tracker.getLevelForHand(HandTypePriorities.FLUSH)).toBe(4);
 });
 
+test("STRAIGHT Level 1", () => {
+    //STRAIGHT without leveling up
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.STRAIGHT);
+    expect(testChips).toBe(50);
+    expect(testMult).toBe(4);
+    expect(tracker.getLevelForHand(HandTypePriorities.STRAIGHT)).toBe(1);
+});
+
+test("STRAIGHT Level 2", () => {
+    //STRAIGHT after leveling up once using SATURN
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.SATURN, PlanetEditions.NONE);
+
+    tracker.playPlanetCard(testPlanet);
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.STRAIGHT);
+    expect(testChips).toBe(80);
+    expect(testMult).toBe(7);
+    expect(tracker.getLevelForHand(HandTypePriorities.STRAIGHT)).toBe(2);
+});
+
+test("THREE_OF_A_KIND Level 1", () => {
+    //THREE_OF_A_KIND without leveling
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
+    expect(testChips).toBe(60);
+    expect(testMult).toBe(3);
+    expect(tracker.getLevelForHand(HandTypePriorities.THREE_OF_A_KIND)).toBe(1);
+});
+
+test("THREE_OF_A_KIND Level 5", () => {
+    //THREE_OF_A_KIND after using 4 VENUS cards
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.VENUS, PlanetEditions.NONE);
+
+    for (let i = 0; i < 4; i++) {
+        tracker.playPlanetCard(testPlanet);
+    }
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
+    expect(testChips).toBe(140);
+    expect(testMult).toBe(11);
+    expect(tracker.getLevelForHand(HandTypePriorities.THREE_OF_A_KIND)).toBe(5);
+});
+
+test("TWO_PAIR Level 1", () => {
+    //TWO_PAIR without leveling
+
+    let testCards = [
+        new PlayingCard(Ranks.SEVEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.TWO_PAIR);
+    expect(testChips).toBe(48);
+    expect(testMult).toBe(2);
+    expect(tracker.getLevelForHand(HandTypePriorities.TWO_PAIR)).toBe(1);
+});
+
+test("TWO_PAIR Level 6", () => {
+    //TWO_PAIR with 5 URANUS cards played
+
+    let testCards = [
+        new PlayingCard(Ranks.SEVEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.URANUS, PlanetEditions.NONE);
+
+    for (let i = 0; i < 5; i++) {
+        tracker.playPlanetCard(testPlanet);
+    }
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.TWO_PAIR);
+    expect(testChips).toBe(148);
+    expect(testMult).toBe(7);
+    expect(tracker.getLevelForHand(HandTypePriorities.TWO_PAIR)).toBe(6);
+});
+
+test("PAIR Level 1", () => {
+    //PAIR without leveling
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.PAIR);
+    expect(testChips).toBe(32);
+    expect(testMult).toBe(2);
+    expect(tracker.getLevelForHand(HandTypePriorities.PAIR)).toBe(1);
+});
+
+test("PAIR Level 10", () => {
+    //PAIR with 9 MERCURY cards played
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.MERCURY, PlanetEditions.NONE);
+
+    for (let i = 0; i < 9; i++) {
+        tracker.playPlanetCard(testPlanet);
+    }
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.PAIR);
+    expect(testChips).toBe(167);
+    expect(testMult).toBe(11);
+    expect(tracker.getLevelForHand(HandTypePriorities.PAIR)).toBe(10);
+});
+
+test("HIGH_CARD Level 1", () => {
+    //PAIR with 98 PLUTO cards played
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
+    expect(testChips).toBe(16);
+    expect(testMult).toBe(1);
+    expect(tracker.getLevelForHand(HandTypePriorities.HIGH_CARD)).toBe(1);
+});
+
+test("HIGH_CARD Level 99", () => {
+    //PAIR with 98 PLUTO cards played
+
+    let testCards = [
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheckOutput = checkHandType(hand, jokers);
+
+    let tracker = new PlanetTracker();
+    let testPlanet = new PlanetCard(PlanetTypes.PLUTO, PlanetEditions.NONE);
+
+    for (let i = 0; i < 98; i++) {
+        tracker.playPlanetCard(testPlanet);
+    }
+
+    let testScore = new ScoreObject(handCheckOutput.handType,
+                                    handCheckOutput.scoringCards,
+                                    jokers,
+                                    tracker);
+    
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheckOutput.handType).toBe(HandTypePriorities.HIGH_CARD);
+    expect(testChips).toBe(996);
+    expect(testMult).toBe(99);
+    expect(tracker.getLevelForHand(HandTypePriorities.HIGH_CARD)).toBe(99);
+});
