@@ -503,6 +503,30 @@ test("WILD 5 cards FLUSH_FIVE", () => {
     expect(testMult).toBe(16);
 });
 
+test("WILD 2 cards nonscoring THREE_OF_A_KIND", () => {
+    //THREE_OF_A_KIND hand with 2 nonscoring WILD cards
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
+    expect(testChips).toBe(36);
+    expect(testMult).toBe(3);
+});
+
 //-----------------------------------------------
 // We won't consider GLASS cards being potentially destroyed after being played for the moment, as
 // right now this is only a score calculator
