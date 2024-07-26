@@ -9,7 +9,7 @@
  * various hand types), and various joker effects.
  */
 
-import { EditionTypes } from "./CardTypes";
+import { EditionTypes, EnhancementTypes } from "./CardTypes";
 import { HandTypePriorities } from "./HandTypeDefs";
 import { PlanetTracker } from "./PlanetCards/PlanetDefs";
 
@@ -63,6 +63,22 @@ class ScoreObject {
                     break;
                 case EditionTypes.POLYCHROME:
                     this.multiplierField *= 1.5;
+                    break;
+            }
+
+            //check for enhancement effects
+            switch (currCard.enhancement) {
+                case EnhancementTypes.BONUS:
+                    this.chipsField += 30;
+                    break;
+                case EnhancementTypes.MULT:
+                    this.multiplierField += 4;
+                    break;
+                case EnhancementTypes.GLASS:
+                    this.multiplierField *= 2;
+                    break;
+                case EnhancementTypes.STONE:
+                    this.chipsField += 50 - currCard.getChipsForScoring();
                     break;
             }
         });
