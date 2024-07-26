@@ -36,7 +36,7 @@ test("FOIL 1 card HIGH_CARD", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -62,7 +62,7 @@ test("FOIL 3 cards THREE_OF_A_KIND", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -88,7 +88,7 @@ test("FOIL 1 nonscoring card HIGH_CARD", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -114,7 +114,7 @@ test("HOLOGRAPHIC 1 card HIGH_CARD", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -140,7 +140,7 @@ test("HOLOGRAPHIC 4 cards FOUR_OF_A_KIND", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -166,7 +166,7 @@ test("HOLOGRAPHIC 1 card nonscoring FOUR_OF_A_KIND", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -192,7 +192,7 @@ test("POLYCHROME 1 card HIGH_CARD", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -218,7 +218,7 @@ test("POLYCHROME 5 cards FLUSH", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -244,7 +244,7 @@ test("POLYCHROME 2 cards nonscoring THREE_OF_A_KIND", () => {
 
     let tracker = new PlanetTracker();
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -260,8 +260,9 @@ test("POLYCHROME 2 cards nonscoring THREE_OF_A_KIND", () => {
 // This section will be more tricky because LUCKY + STEEL cards work slightly differently. 
 // LUCKY cards: 1 in 5 chance for +20 Mult, 1 in 15 chance to win $20
 // STEEL cards: x1.5 Mult while this card stays in hand
+//
+// I won't test GOLD cards here because their effect is irrelevant for score calculation.
 //--------------------------------------------------------------------------------
-//todo: STONE cards need to actually count for scoring. Right now they only show up in the scoringCards array
 
 test("BONUS 1 card HIGH_CARD", () => {
     //HIGH_CARD hand with the scoring card being a BONUS card (+30 Chips)
@@ -279,7 +280,7 @@ test("BONUS 1 card HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
@@ -303,7 +304,7 @@ test("BONUS 2 cards PAIR", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.PAIR);
@@ -327,7 +328,7 @@ test("BONUS 3 cards nonscoring PAIR", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.PAIR);
@@ -351,7 +352,7 @@ test("MULT 1 card HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
@@ -375,7 +376,7 @@ test("MULT 5 cards FLUSH", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FLUSH);
@@ -399,7 +400,7 @@ test("MULT 1 cards nonscoring TWO_PAIR", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.TWO_PAIR);
@@ -423,7 +424,7 @@ test("WILD 1 card HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
@@ -447,7 +448,7 @@ test("WILD 2 cards FLUSH", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FLUSH);
@@ -471,7 +472,7 @@ test("WILD 5 cards FLUSH", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FLUSH);
@@ -495,7 +496,7 @@ test("WILD 5 cards FLUSH_FIVE", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FLUSH_FIVE);
@@ -519,7 +520,7 @@ test("WILD 2 cards nonscoring THREE_OF_A_KIND", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.THREE_OF_A_KIND);
@@ -547,7 +548,7 @@ test("GLASS 1 card HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
@@ -571,7 +572,7 @@ test("GLASS 5 cards FLUSH_FIVE", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FLUSH_FIVE);
@@ -595,12 +596,97 @@ test("GLASS 4 card nonscoring HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
     expect(testChips).toBe(12);
     expect(testMult).toBe(1);
+});
+
+test("STEEL 1 card HIGH_CARD", () => {
+    //HIGH_CARD hand with the scoring card being the STEEL card (x1.5 Mult), should have no effect
+    //because it was played
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
+    expect(testChips).toBe(12);
+    expect(testMult).toBe(1);
+});
+
+test("STEEL 2 cards in Hand, PAIR", () => {
+    //PAIR hand with 2 unplayed STEEL cards (x1.5 Mult) in the hand
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let unplayedCards = [
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.EIGHT, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, unplayedCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.PAIR);
+    expect(testChips).toBe(14);
+    expect(testMult).toBeCloseTo(4.5, 1);
+});
+
+test("STEEL 5 cards played, 3 cards in hand, FLUSH_FIVE", () => {
+    //FLUSH_FIVE hand with 5 played STEEL cards (x1.5 Mult should not activate)
+    //3 unplayed STEEL cards in hand (x1.5 Mult SHOULD activate)
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+    ];
+
+    let unplayedCards = [
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.EIGHT, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, unplayedCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.FLUSH_FIVE);
+    expect(testChips).toBe(210);
+    expect(testMult).toBe(54);
 });
 
 test("STONE 1 card FOUR_OF_A_KIND", () => {
@@ -619,7 +705,7 @@ test("STONE 1 card FOUR_OF_A_KIND", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.FOUR_OF_A_KIND);
@@ -643,7 +729,7 @@ test("STONE 5 cards HIGH_CARD", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
@@ -667,7 +753,7 @@ test("STONE 3 cards PAIR", () => {
     let tracker = new PlanetTracker();
     let handCheck = checkHandType(hand, jokers);
 
-    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [],  jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
     expect(handCheck.handType).toBe(HandTypePriorities.PAIR);

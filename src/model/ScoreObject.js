@@ -20,6 +20,8 @@ class ScoreObject {
     jokerCards = [];
     planetTracker;
 
+    unplayedCardsInHand = [];
+
     chipsField;
     multiplierField;
 
@@ -27,13 +29,15 @@ class ScoreObject {
      * Constructs a scoring object.
      * 
      * @param {HandTypePriorities} handType the type of hand being played
-     * @param {Array} scoringCards the array of cards that will count for scoring 
+     * @param {Array} scoringCards the array of cards that will count for scoring
+     * @param {Array} unplayedCards the array of unplayed cards in the hand that may have an effect on scoring
      * @param {Array} jokers the array of jokers currently in play
      * @param {PlanetTracker} planetTracker the planet tracker managing the levels of each hand type
      */
-    constructor(handType, scoringCards, jokers, planetTracker) {
+    constructor(handType, scoringCards, unplayedCards, jokers, planetTracker) {
         this.handType = handType;
         this.scoringCards = scoringCards;
+        this.unplayedCardsInHand = unplayedCards;
         this.jokerCards = jokers;
         this.planetTracker = planetTracker;
 
@@ -46,9 +50,6 @@ class ScoreObject {
     }
 
     activatePlayingCardEffects() {
-        //editions, enhancements, seals
-        
-        //factor in each card's base score values
 
         this.scoringCards.forEach((currCard) => {
             this.chipsField += currCard.getChipsForScoring();
@@ -84,9 +85,20 @@ class ScoreObject {
         });
     }
 
+    activateUnplayedCardEffects() {
+        //check for unplayed STEEL cards in hand
+
+        this.unplayedCardsInHand.forEach((currCard) => {
+            if (currCard.enhancement === EnhancementTypes.STEEL) {
+                this.multiplierField *= 1.5;
+            }
+        });
+    }
+
     getFinalScoreValues() {
         this.activateJokers();
         this.activatePlayingCardEffects();
+        this.activateUnplayedCardEffects();
 
         return [this.chipsField, this.multiplierField];
     }

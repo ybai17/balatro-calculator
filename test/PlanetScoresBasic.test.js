@@ -43,6 +43,7 @@ test("FLUSH_FIVE Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -77,6 +78,7 @@ test("FLUSH_FIVE Level 3", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -107,6 +109,7 @@ test("FLUSH_HOUSE Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -140,6 +143,7 @@ test("FLUSH_HOUSE Level 2", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -170,6 +174,7 @@ test("FIVE_OF_A_KIND Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -205,6 +210,7 @@ test("FIVE_OF_A_KIND Level 4", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -234,9 +240,10 @@ test("STRAIGHT_FLUSH Level 1", () => {
     let tracker = new PlanetTracker();
 
     let testScore = new ScoreObject(handCheckOutput.handType,
-        handCheckOutput.scoringCards,
-        jokers,
-        tracker);
+                                    handCheckOutput.scoringCards,
+                                    [],
+                                    jokers,
+                                    tracker);
 
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
@@ -269,6 +276,7 @@ test("STRAIGHT_FLUSH Level 3", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -299,6 +307,7 @@ test("FOUR_OF_A_KIND Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -332,6 +341,7 @@ test("FOUR_OF_A_KIND Level 2", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -362,6 +372,7 @@ test("FULL_HOUSE Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -396,6 +407,7 @@ test("FULL_HOUSE Level 3", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -426,6 +438,7 @@ test("FLUSH Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -461,6 +474,7 @@ test("FLUSH Level 4", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -491,6 +505,7 @@ test("STRAIGHT Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -524,6 +539,7 @@ test("STRAIGHT Level 2", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -554,6 +570,7 @@ test("THREE_OF_A_KIND Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -589,6 +606,7 @@ test("THREE_OF_A_KIND Level 5", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -619,6 +637,7 @@ test("TWO_PAIR Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -654,6 +673,7 @@ test("TWO_PAIR Level 6", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
 
@@ -684,6 +704,7 @@ test("PAIR Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -719,6 +740,7 @@ test("PAIR Level 10", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -749,6 +771,7 @@ test("HIGH_CARD Level 1", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
@@ -784,6 +807,7 @@ test("HIGH_CARD Level 99", () => {
 
     let testScore = new ScoreObject(handCheckOutput.handType,
                                     handCheckOutput.scoringCards,
+                                    [],
                                     jokers,
                                     tracker);
     
