@@ -431,6 +431,11 @@ function isPair(playedHand, jokers) {
 
 function isHighCard(playedHand, jokers) {
 
+    //in case 5 STONE cards are played:
+    if (playedHand.size === 0) {
+        return {isHand: true, scoringCards: []};
+    }
+
     //find the card with the highest rank
     let highestCard = playedHand.cards[0];
 
