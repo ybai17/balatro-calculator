@@ -407,6 +407,106 @@ test("MULT 1 cards nonscoring TWO_PAIR", () => {
     expect(testMult).toBe(2);
 });
 
+test("WILD 1 card HIGH_CARD", () => {
+    //HIGH_CARD hand where the 1 scoring card is the WILD card
+
+    let testCards = [
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.BONUS, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.HIGH_CARD);
+    expect(testChips).toBe(12);
+    expect(testMult).toBe(1);
+});
+
+test("WILD 2 cards FLUSH", () => {
+    //FLUSH hand with 2 cards that have the WILD enhancement
+
+    let testCards = [
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.FLUSH);
+    expect(testChips).toBe(57);
+    expect(testMult).toBe(4);
+});
+
+test("WILD 5 cards FLUSH", () => {
+    //FLUSH hand with 5 cards that all have the WILD enhancement
+
+    let testCards = [
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.FLUSH);
+    expect(testChips).toBe(57);
+    expect(testMult).toBe(4);
+});
+
+test("WILD 5 cards FLUSH_FIVE", () => {
+    //FLUSH_FIVE with 5 cards that all are WILD
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.FLUSH_FIVE);
+    expect(testChips).toBe(170);
+    expect(testMult).toBe(16);
+});
+
+//-----------------------------------------------
+// We won't consider GLASS cards being potentially destroyed after being played for the moment, as
+// right now this is only a score calculator
+//-----------------------------------------------
 test("GLASS 1 card HIGH_CARD", () => {
     //HIGH_CARD hand with the scoring card being a GLASS card (x2 Mult)
 
@@ -551,12 +651,25 @@ test("STONE 3 cards PAIR", () => {
     expect(testMult).toBe(2);
 });
 
+//---------------------------------------------------------
 //RED SEAL
+//
+// This section will be short, as without any additional modifiers, the red seal simply causes
+// a playing card to count for double its chip value
+//---------------------------------------------------------
 
+//---------------------------------------------------------
 //EDITIONS + ENHANCEMENTS
+//---------------------------------------------------------
 
+//---------------------------------------------------------
 //EDITIONS + RED SEAL
+//---------------------------------------------------------
 
+//---------------------------------------------------------
 //ENHANCEMENTS + RED SEAL
+//---------------------------------------------------------
 
+//---------------------------------------------------------
 //EDITIONS + ENHANCEMENTS + RED SEAL
+//---------------------------------------------------------
