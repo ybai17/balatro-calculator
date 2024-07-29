@@ -81,6 +81,9 @@ class ScoreObject {
                 case EnhancementTypes.STONE:
                     this.chipsField += 50 - currCard.getChipsForScoring();
                     break;
+                case EnhancementTypes.LUCKY:
+                    
+                    break;
             }
         });
     }
