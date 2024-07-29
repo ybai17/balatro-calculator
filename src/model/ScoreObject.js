@@ -82,7 +82,8 @@ class ScoreObject {
                     this.chipsField += 50 - currCard.getChipsForScoring();
                     break;
                 case EnhancementTypes.LUCKY:
-                    
+                    //we need to differentiate between lucky being used for gameplay purposes in the future,
+                    //vs using predictable pseudo-random outcomes during testing 
                     break;
             }
         });
