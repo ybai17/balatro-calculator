@@ -27,21 +27,20 @@ class ScoreObjectRNGBundle {
     /**
      * Function that generates the RNG value that decides whether or not a Lucky card scores.
      * 
-     * @param {Number} numLuckyCards the number of LUCKY cards active in the played hand
-     * @returns an array of RNG rolls [0, 1), with size = numLuckyCards. Each corresponds to one card
+     * @param {Number} luckyCardNumber what number this LUCKY card is to ensure the PRNG output is unique
+     * @returns 1 RNG roll [0, 1)
      */
-    generateLuckyRNG(numLuckyCards) {
+    generateLuckyRNG(luckyCardNumber) {
         //we only care about the 1 in 5 chance to get +20 Mult right now
 
-        let output = [];
+        let seeds = util.cyrb128(this.baseStringField + "_lucky" + i);
 
-        for (let i = 0; i < numLuckyCards; i++) {
-            let seeds = util.cyrb128(this.baseStringField + "_lucky" + i);
-            output.push(util.splitmix32(seeds[0]));
-        }
-
-        return output;
+        
     }
+
+}
+
+function ScoreObjectRNGHandler(baseString, cardType, ID) {
 
 }
 
