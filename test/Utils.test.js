@@ -5,7 +5,14 @@
 import { test, expect } from "vitest";
 import * as util from "../src/model/Utils";
 
+//1abcdef
+//abcd1111efgh
+//abcd1001efgh
+//abcd1000efgh
+
 let print_debug = true;
+let test_string = "abcd_lucky1";
+let diff_string = "abcd_lucky2";
 
 //-------------------------------------------------------------
 // Test the seeding hash function and PRNG function
@@ -13,8 +20,8 @@ let print_debug = true;
 
 test("cyrb128 test same seed", () => {
 
-    let first = util.cyrb128("test");
-    let second = util.cyrb128("test");
+    let first = util.cyrb128(test_string);
+    let second = util.cyrb128(test_string);
 
     if (print_debug) {
         console.log(first);
@@ -28,8 +35,8 @@ test("cyrb128 test same seed", () => {
 });
 
 test("cyrb128 test diff seed", () => {
-    let first = util.cyrb128("test");
-    let second = util.cyrb128("Test");
+    let first = util.cyrb128(test_string);
+    let second = util.cyrb128(diff_string);
 
     if (print_debug) {
         console.log(first);
@@ -43,7 +50,7 @@ test("cyrb128 test diff seed", () => {
 });
 
 test("splitmix32 + cyrb128 test same seed", () => {
-    let seeds = util.cyrb128("test");
+    let seeds = util.cyrb128(test_string);
 
     let result_functions = [];
     let results = [];
@@ -56,7 +63,7 @@ test("splitmix32 + cyrb128 test same seed", () => {
         }
     }
 
-    let seeds_same = util.cyrb128("test");
+    let seeds_same = util.cyrb128(test_string);
 
     let result_functions_same = [];
     let results_same = [];
@@ -75,7 +82,7 @@ test("splitmix32 + cyrb128 test same seed", () => {
 });
 
 test("splitmax32 + cyrb128 test diff seed", () => {
-    let seeds = util.cyrb128("test");
+    let seeds = util.cyrb128(test_string);
 
     let result_functions = [];
     let results = [];
@@ -88,7 +95,7 @@ test("splitmax32 + cyrb128 test diff seed", () => {
         }
     }
 
-    let seeds_diff = util.cyrb128("Test");
+    let seeds_diff = util.cyrb128(diff_string);
 
     let result_functions_diff = [];
     let results_diff = [];
