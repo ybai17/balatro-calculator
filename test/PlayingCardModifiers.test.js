@@ -761,10 +761,19 @@ test("STONE 3 cards PAIR", () => {
     expect(testMult).toBe(2);
 });
 
-//-------------------------
-//For the LUCKY cards, 
-//-------------------------
-test("LUCKY ")
+test("LUCKY 1 card HIGH_CARD preseeded", () => {
+    expect(false).toBeTruthy();
+});
+
+test("LUCKY 1 card HIGH_CARD average", () => {
+    //this function will make sure the "truly" random (not pre-seeded) LUCKY card scores within
+    //an expected average range
+    expect(false).toBeTruthy();
+});
+
+test("LUCKY 3 cards THREE_PAIR 2 trigger preseeded", () => {
+    expect(false).toBeTruthy();
+});
 
 //---------------------------------------------------------
 //RED SEAL
