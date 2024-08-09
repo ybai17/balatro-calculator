@@ -10,8 +10,11 @@ import * as util from "../src/model/Utils";
 //abcd1001efgh
 //abcd1000efgh
 
+//e_lucky1 first value 0.0153865
+//e_lucky2 first value 0.0137015
+
 let print_debug = true;
-let test_string = "e_lucky1";
+let test_string = "abcd_lucky1";
 let diff_string = "abcd_lucky2";
 
 //-------------------------------------------------------------

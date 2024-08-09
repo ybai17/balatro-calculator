@@ -824,6 +824,29 @@ test("LUCKY 1 card THREE_OF_A_KIND preseeded trigger", () => {
     expect(testMult).toBe(23);
 });
 
+test("LUCKY 2 cards THREE_OF_A_KIND preseeded 2 trigger", () => {
+    //THREE_OF_A_KIND hand with 2 LUCKY cards that both trigger
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "e");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(60);
+    expect(testMult).toBe(43);
+});
+
 test("LUCKY 1 card THREE_OF_A_KIND preseeded no trigger", () => {
     //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that does NOT trigger its +20
 
@@ -847,7 +870,28 @@ test("LUCKY 1 card THREE_OF_A_KIND preseeded no trigger", () => {
     expect(testMult).toBe(3);
 });
 
+test("LUCKY 1 card nonscoring THREE_OF_A_KIND", () => {
+    //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that does NOT trigger its +20
 
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "asdf");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(60);
+    expect(testMult).toBe(3);
+});
 
 //---------------------------------------------------------
 //RED SEAL
