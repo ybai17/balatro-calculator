@@ -761,19 +761,93 @@ test("STONE 3 cards PAIR", () => {
     expect(testMult).toBe(2);
 });
 
-test("LUCKY 1 card HIGH_CARD preseeded", () => {
-    expect(false).toBeTruthy();
-});
-
 test("LUCKY 1 card HIGH_CARD average", () => {
-    //this function will make sure the "truly" random (not pre-seeded) LUCKY card scores within
+    //this test will make sure the "truly" random (not pre-seeded) LUCKY card scores within
     //an expected average range
-    expect(false).toBeTruthy();
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+        new PlayingCard(Ranks.NINE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, []);
+
+    let testScore;
+
+    let totalMult = 0;
+
+    for (let i = 0; i < 10000; i++) {
+        testScore = new ScoreObject(handCheck.handType,
+                                    handCheck.scoringCards,
+                                    [],
+                                    jokers,
+                                    tracker,
+                                    "" + Math.random());
+
+        let toAdd = testScore.getFinalScoreValues()[1];
+
+        totalMult += toAdd;
+    }
+    
+    let avg = totalMult / 10000;
+
+
+    expect(avg > 4.45 && avg < 5.15).toBeTruthy();
 });
 
-test("LUCKY 3 cards THREE_PAIR 2 trigger preseeded", () => {
-    expect(false).toBeTruthy();
+test("LUCKY 1 card THREE_OF_A_KIND preseeded trigger", () => {
+    //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that triggers its +20
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "e");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(60);
+    expect(testMult).toBe(23);
 });
+
+test("LUCKY 1 card THREE_OF_A_KIND preseeded no trigger", () => {
+    //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that does NOT trigger its +20
+
+    let testCards = [
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let tracker = new PlanetTracker();
+    let handCheck = checkHandType(hand, jokers);
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "asdf");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(60);
+    expect(testMult).toBe(3);
+});
+
+
 
 //---------------------------------------------------------
 //RED SEAL

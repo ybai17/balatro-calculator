@@ -11,7 +11,7 @@ import * as util from "../src/model/Utils";
 //abcd1000efgh
 
 let print_debug = true;
-let test_string = "abcd_lucky1";
+let test_string = "e_lucky1";
 let diff_string = "abcd_lucky2";
 
 //-------------------------------------------------------------
