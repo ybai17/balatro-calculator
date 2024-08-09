@@ -10,7 +10,7 @@ import * as util from "./Utils";
  * 
  * This class will only be used for testing and for the score calculator, NOT the actual game implementation.
  */
-class ScoreObjectRNGBundle {
+class ScoreObjectRNGHandler {
 
     baseStringField;
 
@@ -30,18 +30,16 @@ class ScoreObjectRNGBundle {
      * @param {Number} luckyCardNumber what number this LUCKY card is to ensure the PRNG output is unique
      * @returns 1 RNG roll [0, 1)
      */
-    generateLuckyRNG(luckyCardNumber) {
+    generateLuckyCardRNG(luckyCardNumber) {
         //we only care about the 1 in 5 chance to get +20 Mult right now
 
-        let seeds = util.cyrb128(this.baseStringField + "_lucky" + i);
+        let seeds = util.cyrb128(this.baseStringField + "_lucky" + luckyCardNumber);
 
-        
+        let output = util.splitmix32(seeds[0])();
+
+        return output;
     }
 
 }
 
-function ScoreObjectRNGHandler(baseString, cardType, ID) {
-
-}
-
-export default ScoreObjectRNGBundle;
+export default ScoreObjectRNGHandler;

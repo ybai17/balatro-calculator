@@ -3,7 +3,7 @@
  */
 
 /**
- * This function generates a seed from a string, to be used in psuedo-RNG's.
+ * This function generates seeds from a string, to be used in psuedo-RNG's.
  * Calling cyrb128() will produce a 128-bit hash value from a string which can be used to seed a PRNG.
  * 
  * Source: https://stackoverflow.com/a/47593316

@@ -1,3 +1,10 @@
+import { EditionTypes, EnhancementTypes } from "./CardTypes";
+import { HandTypePriorities } from "./HandTypeDefs";
+import { PlanetTracker } from "./PlanetCards/PlanetDefs";
+import ScoreObjectRNGHandler from "./ScoreObjectRNGHandler";
+import ScoreObjectRNGBundle from "./ScoreObjectRNGHandler";
+import { splitmix32, cyrb128 } from "./Utils";
+
 /**
  * This class represents the two components that make up the final, calculated score:
  * It starts with the base values based on what hand type was played, then applies the upgraded amounts from planet cards,
@@ -7,12 +14,9 @@
  * 
  * Both numbers can be affected by the type of hand played, the cards played, planet cards (which upgrade the scoring for
  * various hand types), and various joker effects.
+ * 
+ * This class will only be used for testing and for the score calculator, NOT the actual game implementation.
  */
-
-import { EditionTypes, EnhancementTypes } from "./CardTypes";
-import { HandTypePriorities } from "./HandTypeDefs";
-import { PlanetTracker } from "./PlanetCards/PlanetDefs";
-
 class ScoreObject {
 
     handType;
@@ -25,6 +29,8 @@ class ScoreObject {
     chipsField;
     multiplierField;
 
+    rngObject;
+
     /**
      * Constructs a scoring object.
      * 
@@ -33,13 +39,17 @@ class ScoreObject {
      * @param {Array} unplayedCards the array of unplayed cards in the hand that may have an effect on scoring
      * @param {Array} jokers the array of jokers currently in play
      * @param {PlanetTracker} planetTracker the planet tracker managing the levels of each hand type
+     * @param {String} rngSeedString the seed string for this run, from which other rng-based cards will use
      */
-    constructor(handType, scoringCards, unplayedCards, jokers, planetTracker) {
+    constructor(handType, scoringCards, unplayedCards, jokers, planetTracker, rngSeedString) {
         this.handType = handType;
         this.scoringCards = scoringCards;
         this.unplayedCardsInHand = unplayedCards;
         this.jokerCards = jokers;
         this.planetTracker = planetTracker;
+
+        //initialize the RNG handler
+        this.rngObject = new ScoreObjectRNGHandler(rngSeedString);
 
         //it will start with the updated score values based on the hand type levels
         [this.chipsField, this.multiplierField] = planetTracker.getHandBaseScore(this.handType);
@@ -50,6 +60,8 @@ class ScoreObject {
     }
 
     activatePlayingCardEffects() {
+
+        let cardCount = 0;
 
         this.scoringCards.forEach((currCard) => {
             this.chipsField += currCard.getChipsForScoring();
@@ -83,9 +95,18 @@ class ScoreObject {
                     break;
                 case EnhancementTypes.LUCKY:
                     //we need to differentiate between lucky being used for gameplay purposes in the future,
-                    //vs using predictable pseudo-random outcomes during testing 
+                    //vs using predictable pseudo-random outcomes during testing
+
+                    let multRoll = Math.floor(this.rngObject.generateLuckyCardRNG(cardCount) * 5);
+
+                    if (multRoll === 0) {
+                        this.multiplierField += 20;
+                    }
+
                     break;
             }
+
+            cardCount++;
         });
     }
 
