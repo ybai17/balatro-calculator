@@ -900,7 +900,50 @@ test("LUCKY 1 card nonscoring THREE_OF_A_KIND", () => {
 // a playing card to count for double its chip value
 //---------------------------------------------------------
 
+test("RED SEAL 1 card HIGH_CARD", () => {
+    //HIGH_CARD hand with the scoring single card having a RED SEAL
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.FOUR, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.JACK, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+    ];
 
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(25);
+    expect(testMult).toBe(1);
+});
+
+test("RED SEAL 5 cards 1 nonscoring FOUR_OF_A_KIND", () => {
+    //FOUR_OF_A_KIND hand with 4 scoring cards with RED SEALs on them, and 1 nonscoring RED SEAL card
+
+    let testCards = [
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(84);
+    expect(testMult).toBe(7);
+});
 
 //---------------------------------------------------------
 //EDITIONS + ENHANCEMENTS
