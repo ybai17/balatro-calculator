@@ -36,6 +36,12 @@ function checkHandType(playedHand, jokers) {
         return cardB.rank - cardA.rank;
     });
 
+    //todo: need to change this such that the cards are sorted for easy hand type checking,
+    //but need to preserve the order of the actually played cards, as they must be scored 
+    //from LEFT to RIGHT in the order they were played.
+    //e.g. there is a difference between HOLOGRAPHIC +10 + POLYCHROME x1.5 PAIR vs
+    //the other way around
+
     //sort stone cards in descending order as well, and remember that they are always scored last
     stoneCards.sort((cardA, cardB) => {
         return cardB.rank - cardA.rank;
