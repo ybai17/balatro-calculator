@@ -1,4 +1,4 @@
-import { EditionTypes, EnhancementTypes } from "./CardTypes";
+import { EditionTypes, EnhancementTypes, SealTypes } from "./CardTypes";
 import { HandTypePriorities } from "./HandTypeDefs";
 import { PlanetTracker } from "./PlanetCards/PlanetDefs";
 import ScoreObjectRNGHandler from "./ScoreObjectRNGHandler";
@@ -64,58 +64,75 @@ class ScoreObject {
         let cardCount = 0;
 
         this.scoringCards.forEach((currCard) => {
-            this.chipsField += currCard.getChipsForScoring();
+            let numberOfTimes = 1; //by default, without red seal, score the card once
+
+            //check for red seal, which activates the card twice (including enhancement + edition effects)
+            if (currCard.seal === SealTypes.RED) {
+                numberOfTimes = 2;
+            }
+
+            for (let i = 0; i < numberOfTimes; i++) {
+                this.chipsField += currCard.getChipsForScoring();
             
-            //check for edition effects
-            switch (currCard.edition) {
-                case EditionTypes.FOIL:
-                    this.chipsField += 50;
-                    break;
-                case EditionTypes.HOLOGRAPHIC:
-                    this.multiplierField += 10;
-                    break;
-                case EditionTypes.POLYCHROME:
-                    this.multiplierField *= 1.5;
-                    break;
+                //check for edition effects
+                switch (currCard.edition) {
+                    case EditionTypes.FOIL:
+                        this.chipsField += 50;
+                        break;
+                    case EditionTypes.HOLOGRAPHIC:
+                        this.multiplierField += 10;
+                        break;
+                    case EditionTypes.POLYCHROME:
+                        this.multiplierField *= 1.5;
+                        break;
+                }
+
+                //check for enhancement effects
+                switch (currCard.enhancement) {
+                    case EnhancementTypes.BONUS:
+                        this.chipsField += 30;
+                        break;
+                    case EnhancementTypes.MULT:
+                        this.multiplierField += 4;
+                        break;
+                    case EnhancementTypes.GLASS:
+                        this.multiplierField *= 2;
+                        break;
+                    case EnhancementTypes.STONE:
+                        this.chipsField += 50 - currCard.getChipsForScoring();
+                        break;
+                    case EnhancementTypes.LUCKY:
+                        //we need to differentiate between lucky being used for gameplay purposes in the future,
+                        //vs using predictable pseudo-random outcomes during testing
+
+                        let multRoll = Math.floor(this.rngObject.generateLuckyCardRNG(cardCount) * 5);
+                        if (multRoll === 0) {
+                            this.multiplierField += 20;
+                        }
+                        break;
+                }
             }
-
-            //check for enhancement effects
-            switch (currCard.enhancement) {
-                case EnhancementTypes.BONUS:
-                    this.chipsField += 30;
-                    break;
-                case EnhancementTypes.MULT:
-                    this.multiplierField += 4;
-                    break;
-                case EnhancementTypes.GLASS:
-                    this.multiplierField *= 2;
-                    break;
-                case EnhancementTypes.STONE:
-                    this.chipsField += 50 - currCard.getChipsForScoring();
-                    break;
-                case EnhancementTypes.LUCKY:
-                    //we need to differentiate between lucky being used for gameplay purposes in the future,
-                    //vs using predictable pseudo-random outcomes during testing
-
-                    let multRoll = Math.floor(this.rngObject.generateLuckyCardRNG(cardCount) * 5);
-
-                    if (multRoll === 0) {
-                        this.multiplierField += 20;
-                    }
-
-                    break;
-            }
-
+            //todo: check if red seal on LUCKY cards means that if it triggers the first time,
+            //it's guaranteed to trigger again.
+            //OR, maybe it just means to just roll again (with 1/5 and 1/15 chances for its effects to trigger)
             cardCount++;
         });
     }
 
     activateUnplayedCardEffects() {
-        //check for unplayed STEEL cards in hand
-
         this.unplayedCardsInHand.forEach((currCard) => {
-            if (currCard.enhancement === EnhancementTypes.STEEL) {
-                this.multiplierField *= 1.5;
+            let numberOfTimes = 1;
+
+            //check for red seal
+            if (currCard.seal === SealTypes.RED) {
+                numberOfTimes = 2;
+            }
+
+            for (let i = 0; i < numberOfTimes; i++) {
+                //check for unplayed STEEL cards in hand
+                if (currCard.enhancement === EnhancementTypes.STEEL) {
+                    this.multiplierField *= 1.5;
+                }
             }
         });
     }
