@@ -62,7 +62,7 @@ class PlayingCard {
                         this.suitField + "_" +
                         this.editionField + "_" +
                         this.enhancementField + "_" +
-                        this.sealField + "_" + Date.now();
+                        this.sealField + "_" + Math.random();
     }
 
     //getters and setters
