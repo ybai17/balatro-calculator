@@ -49,11 +49,11 @@ test("FOIL 3 cards THREE_OF_A_KIND", () => {
     //THREE_OF_A_KIND hand with the 3 scoring cards all being FOIL cards (+50 chips)
 
     let testCards = [
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.FOIL, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -127,11 +127,11 @@ test("HOLOGRAPHIC 4 cards FOUR_OF_A_KIND", () => {
     //FOUR_OF_A_KIND hand with 4 HOLOGRAPHIC cards (+10 Mult)
 
     let testCards = [
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -153,11 +153,11 @@ test("HOLOGRAPHIC 1 card nonscoring FOUR_OF_A_KIND", () => {
     //FOUR_OF_A_KIND hand with 4 normal cards and 1 HOLOGRAPHIC card that shouldn't score
 
     let testCards = [
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.HOLOGRAPHIC, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -388,11 +388,11 @@ test("MULT 1 cards nonscoring TWO_PAIR", () => {
     //TWO_PAIR hand with 1 nonscoring MULT card
 
     let testCards = [
-        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.QUEEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.BONUS, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.QUEEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.SIX, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.BONUS, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -484,11 +484,11 @@ test("WILD 5 cards FLUSH_FIVE", () => {
     //FLUSH_FIVE with 5 cards that all are WILD
 
     let testCards = [
-        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.TWO, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -508,11 +508,11 @@ test("WILD 2 cards nonscoring THREE_OF_A_KIND", () => {
     //THREE_OF_A_KIND hand with 2 nonscoring WILD cards
 
     let testCards = [
-        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.FOUR, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE),
-        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.FOUR, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.TWO, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.WILD, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -560,11 +560,11 @@ test("GLASS 5 cards FLUSH_FIVE", () => {
     //FLUSH_FIVE hand with 5 scoring cards being GLASS (x2 Mult)
 
     let testCards= [
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -663,11 +663,11 @@ test("STEEL 5 cards played, 3 cards in hand, FLUSH_FIVE", () => {
     //3 unplayed STEEL cards in hand (x1.5 Mult SHOULD activate)
 
     let testCards = [
-        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 4),
     ];
 
     let unplayedCards = [
@@ -805,11 +805,11 @@ test("LUCKY 1 card THREE_OF_A_KIND preseeded trigger", () => {
     //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that triggers its +20
 
     let testCards = [
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -851,11 +851,11 @@ test("LUCKY 1 card THREE_OF_A_KIND preseeded no trigger", () => {
     //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that does NOT trigger its +20
 
     let testCards = [
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -874,11 +874,11 @@ test("LUCKY 1 card nonscoring THREE_OF_A_KIND", () => {
     //THREE_OF_A_KIND with 1 of the scoring cards being a LUCKY card that does NOT trigger its +20
 
     let testCards = [
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
-        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.SIX, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.THREE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.KING, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
     ];
 
     let hand = new PlayedHand(testCards);
@@ -926,11 +926,11 @@ test("RED SEAL 5 cards 1 nonscoring FOUR_OF_A_KIND", () => {
     //FOUR_OF_A_KIND hand with 4 scoring cards with RED SEALs on them, and 1 nonscoring RED SEAL card
 
     let testCards = [
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
-        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
-        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED, 0),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED, 1),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED, 2),
+        new PlayingCard(Ranks.THREE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED, 3),
+        new PlayingCard(Ranks.FOUR, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.RED, 4),
     ];
 
     let hand = new PlayedHand(testCards);
