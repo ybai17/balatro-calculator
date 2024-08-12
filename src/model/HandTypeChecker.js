@@ -11,6 +11,7 @@ import { EnhancementTypes } from "./CardTypes";
 import { HandTypePriorities } from "./HandTypeDefs";
 import { JokerDefs, JokerIDs } from "./JokerCards/JokerDefs";
 import { Suits } from "./CardTypes";
+import PlayedHand from "./PlayedHandObject";
 
 function checkHandType(playedHand, jokers) {
 
@@ -31,103 +32,122 @@ function checkHandType(playedHand, jokers) {
 
     playedHand.size = playedHand.size - stoneCards.length;
 
+//todo: need to change this such that the cards are sorted for easy hand type checking,
+//but need to preserve the order of the actually played cards, as they must be scored 
+//from LEFT to RIGHT in the order they were played.
+//e.g. there is a difference between HOLOGRAPHIC +10 + POLYCHROME x1.5 PAIR vs
+//the other way around
+
     //sort cards in descending order ahead of time for convenience
-    playedHand.cards = playedHand.cards.sort((cardA, cardB) => {
+    //playedHand.cards = playedHand.cards.sort((cardA, cardB) => {
+    //    return cardB.rank - cardA.rank;
+    //});
+
+    let sortedCardsForCheck = playedHand.cards.slice(0, playedHand.size);
+    sortedCardsForCheck = sortedCardsForCheck.sort((cardA, cardB) => {
         return cardB.rank - cardA.rank;
     });
 
-    //todo: need to change this such that the cards are sorted for easy hand type checking,
-    //but need to preserve the order of the actually played cards, as they must be scored 
-    //from LEFT to RIGHT in the order they were played.
-    //e.g. there is a difference between HOLOGRAPHIC +10 + POLYCHROME x1.5 PAIR vs
-    //the other way around
+    let sortedHand = new PlayedHand(sortedCardsForCheck);
 
     //sort stone cards in descending order as well, and remember that they are always scored last
     stoneCards.sort((cardA, cardB) => {
         return cardB.rank - cardA.rank;
     });
 
-    //boolean, array of Cards
+    //an object that will store { boolean, array of Cards }
     let handCheck;
 
     //for speed, checks for small hand sizes will go first
-    if (playedHand.size === 1) {
+    if (sortedHand.size === 1) {
         return {handType: HandTypePriorities.HIGH_CARD, scoringCards: playedHand.cards};
-    } else if (playedHand.size === 2) {
-        handCheck = isPair(playedHand, jokers);
+    } else if (sortedHand.size === 2) {
+        handCheck = isPair(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.PAIR, scoringCards: out.concat(stoneCards)};
         }
 
-    } else if (playedHand.size === 3) {
-        handCheck = isThreeOfAKind(playedHand, jokers);
+    } else if (sortedHand.size === 3) {
+        handCheck = isThreeOfAKind(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: out.concat(stoneCards)};
         }
     }
 
-    if (playedHand.size === 5) {
-        handCheck = isFlushFive(playedHand, jokers);
+    if (sortedHand.size === 5) {
+        handCheck = isFlushFive(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.FLUSH_FIVE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.FLUSH_FIVE, scoringCards: out.concat(stoneCards)};
         }
 
-        handCheck = isFlushHouse(playedHand, jokers);
+        handCheck = isFlushHouse(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.FLUSH_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.FLUSH_HOUSE, scoringCards: out.concat(stoneCards)};
         }
 
-        handCheck = isFiveOfAKind(playedHand, jokers);
+        handCheck = isFiveOfAKind(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.FIVE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.FIVE_OF_A_KIND, scoringCards: out.concat(stoneCards)};
         }
 
-        handCheck = isFullHouse(playedHand, jokers);
+        handCheck = isFullHouse(sortedHand, jokers);
         if (handCheck.isHand) {
-            return {handType: HandTypePriorities.FULL_HOUSE, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+            let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+            return {handType: HandTypePriorities.FULL_HOUSE, scoringCards: out.concat(stoneCards)};
         }
     }
     
-    handCheck = isStraightFlush(playedHand, jokers);
+    handCheck = isStraightFlush(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.STRAIGHT_FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.STRAIGHT_FLUSH, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isFourOfAKind(playedHand, jokers);
+    handCheck = isFourOfAKind(sortedHand, jokers);
     if (handCheck.isHand) {
-        handCheck.scoringCards = handCheck.scoringCards.concat(stoneCards);
-        //handCheck.scoringCards.sort((cardA, cardB) => {return cardB.rank - cardA.rank});
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
 
-        return {handType: HandTypePriorities.FOUR_OF_A_KIND, scoringCards: handCheck.scoringCards};
+        return {handType: HandTypePriorities.FOUR_OF_A_KIND, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isFlush(playedHand, jokers);
+    handCheck = isFlush(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.FLUSH, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.FLUSH, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isStraight(playedHand, jokers);
+    handCheck = isStraight(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.STRAIGHT, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.STRAIGHT, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isThreeOfAKind(playedHand, jokers);
+    handCheck = isThreeOfAKind(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.THREE_OF_A_KIND, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isTwoPair(playedHand, jokers);
+    handCheck = isTwoPair(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.TWO_PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.TWO_PAIR, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isPair(playedHand, jokers);
+    handCheck = isPair(sortedHand, jokers);
     if (handCheck.isHand) {
-        return {handType: HandTypePriorities.PAIR, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+        let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+        return {handType: HandTypePriorities.PAIR, scoringCards: out.concat(stoneCards)};
     }
 
-    handCheck = isHighCard(playedHand, jokers);
-    return {handType: HandTypePriorities.HIGH_CARD, scoringCards: handCheck.scoringCards.concat(stoneCards)};
+    handCheck = isHighCard(sortedHand, jokers);
+    let out = getCorrespondingCardsFromScoringArray(handCheck.scoringCards, playedHand.cards);
+    return {handType: HandTypePriorities.HIGH_CARD, scoringCards: out.concat(stoneCards)};
 }
 
 //-----------------------------------------
@@ -454,6 +474,24 @@ function isHighCard(playedHand, jokers) {
     }
 
     return {isHand: true, scoringCards: [highestCard]};
+}
+
+//helper function for finding the matches for the scoring cards in the original PlayedHand object,
+//so that we return the scoring cards in the exact order they were played,
+//because the order matters.
+//return the subset of the originalPlayedHand cards that score, in that order
+function getCorrespondingCardsFromScoringArray(scoringCards, originalPlayedHandCards) {
+    let output = [];
+
+    originalPlayedHandCards.forEach((currCard) => {
+        for (let i = 0; i < scoringCards.length; i++) {
+            if (currCard.isSameCardDeep(scoringCards[i])) {
+                output.push(currCard);
+            }
+        }
+    });
+
+    return output;
 }
 
 export default checkHandType;

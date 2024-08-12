@@ -168,13 +168,26 @@ class PlayingCard {
     }
 
     //function for simply checking if two cards are similar (i.e. same rank, suit, modifiers)
-    //
     isSameCardShallow(cardTwo) {
         if (this.rank === cardTwo.rank &&
             this.suit === cardTwo.suit &&
             this.edition === cardTwo.edition &&
             this.enhancement === cardTwo.enhancement &&
             this.seal === cardTwo.seal) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    isSameCardDeep(cardTwo) {
+        if (this.rank === cardTwo.rank &&
+            this.suit === cardTwo.suit &&
+            this.edition === cardTwo.edition &&
+            this.enhancement === cardTwo.enhancement &&
+            this.seal === cardTwo.seal &&
+            this.id === cardTwo.id) {
 
             return true;
         }
