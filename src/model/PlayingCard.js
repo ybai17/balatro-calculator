@@ -44,13 +44,23 @@
  * 
  */
 
-import { EditionTypes, EnhancementTypes, SealTypes } from "./CardTypes";
+import { EditionTypes, EnhancementTypes, SealTypes, Ranks, Suits } from "./CardTypes";
 
 class PlayingCard {
 
     jokerChipsModifierField = 0;
     uniqueID;
 
+    /**
+     * Constructor for a PlayingCard object.
+     * 
+     * @param {Ranks} rank the rank of this card (TWO, THREE, ..., KING, ACE)
+     * @param {Suits} suit the suit of this card (DIAMONDS, CLUBS, HEARTS, SPADES)
+     * @param {EditionTypes} edition the edition modifier of this card, if any (can be NONE)
+     * @param {EnhancementTypes} enhancement the enhancement modifier of this card, if any (can be NONE)
+     * @param {SealTypes} seal the seal modifier of this card, if any (can be NONE)
+     * @param {String} providedID an additional input to help make this card have a unique ID, if needed
+     */
     constructor(rank, suit, edition, enhancement, seal, providedID) {
         this.rankField = rank;
         this.suitField = suit;
