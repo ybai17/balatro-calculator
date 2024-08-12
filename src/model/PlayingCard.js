@@ -51,7 +51,7 @@ class PlayingCard {
     jokerChipsModifierField = 0;
     uniqueID;
 
-    constructor(rank, suit, edition, enhancement, seal) {
+    constructor(rank, suit, edition, enhancement, seal, providedID) {
         this.rankField = rank;
         this.suitField = suit;
         this.editionField = edition;
@@ -62,7 +62,8 @@ class PlayingCard {
                         this.suitField + "_" +
                         this.editionField + "_" +
                         this.enhancementField + "_" +
-                        this.sealField + "_" + Math.random();
+                        this.sealField + "_" +
+                        providedID;
     }
 
     //getters and setters
