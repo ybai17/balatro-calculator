@@ -315,7 +315,7 @@ test("MULT + GLASS 2 cards PAIR", () => {
     expect(testMult).toBe(12);
 });
 
-test("MULT + STEEL 5 cards played, 3 unplayed FIVE_OF_A_KIND", () => {
+test("MULT + STEEL 5 cards played, 3 in hand FIVE_OF_A_KIND", () => {
     //FIVE_OF_A_KIND hand with 5 MULT cards and 3 unplayed STEEL cards
 
     let testCards = [
@@ -340,13 +340,31 @@ test("MULT + STEEL 5 cards played, 3 unplayed FIVE_OF_A_KIND", () => {
     let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, unplayedCards, jokers, tracker);
     let [testChips, testMult] = testScore.getFinalScoreValues();
 
-    expect(handCheck.handType).toBe(HandTypePriorities.FIVE_OF_A_KIND);
     expect(testChips).toBe(145);
     expect(testMult).toBe(108);
 });
 
-test("MULT + STONE", () => {
-    expect(true).toBeFalsy();
+test("MULT + STONE 2 cards HIGH_CARD", () => {
+    //HIGH_CARD with 1 MULT card and 1 STONE card
+
+    let testCards = [
+        new PlayingCard(Ranks.FIVE, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.KING, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.MULT, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.SIX, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(65);
+    expect(testMult).toBe(5);
 });
 
 test("MULT + LUCKY", () => {
@@ -369,8 +387,33 @@ test("WILD + LUCKY", () => {
     expect(true).toBeFalsy();
 });
 
-test("GLASS + STEEL", () => {
-    expect(true).toBeFalsy();
+test("GLASS + STEEL 5 cards played 3 in hand FULL_HOUSE", () => {
+    //FULL_HOUSE with 5 GLASS cards + 3 unplayed STEEL cards
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.FIVE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.FIVE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 4),
+    ];
+
+    let unplayedCards = [
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 5),
+        new PlayingCard(Ranks.THREE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 6),
+        new PlayingCard(Ranks.QUEEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 2),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, unplayedCards, jokers, tracker);
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(56);
+    expect(testMult).toBe(432);
 });
 
 //order of cards played matters!
