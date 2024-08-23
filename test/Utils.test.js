@@ -14,8 +14,10 @@ import * as util from "../src/model/Utils";
 //e_lucky2 first value 0.0137015
 
 let print_debug = true;
-let test_string = "abcd_lucky1";
-let diff_string = "abcd_lucky2";
+let test_string = "e";
+let diff_string = "f";
+//let test_string = "abcd_lucky1";
+//let diff_string = "abcd_lucky2";
 
 //-------------------------------------------------------------
 // Test the seeding hash function and PRNG function
