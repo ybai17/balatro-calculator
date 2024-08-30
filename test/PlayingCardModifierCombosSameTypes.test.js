@@ -608,6 +608,8 @@ test("STEEL + LUCKY 5 cards played, 3 in hand FLUSH_FIVE", () => {
         new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 8),
     ];
 
+    //somehow, the last 2 LUCKY cards are also being triggered even though they shouldn't be ("e_lucky5" and "e_lucky8" should not roll successfully < 0.2)
+
     let unplayedCards = [
         new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 3),
         new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 4),
