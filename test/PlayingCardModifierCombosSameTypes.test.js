@@ -610,6 +610,7 @@ test("STEEL + LUCKY 5 cards played, 3 in hand FLUSH_FIVE", () => {
     ];
 
     //somehow, the last 2 LUCKY cards are also being triggered even though they shouldn't be ("e_lucky5" and "e_lucky8" should not roll successfully < 0.2)
+    //found the reason: the generateCardRNG(luckyCardNumber) function uses the automatically incrementing cardCount variable, not the ID that gets assigned here.
 
     let unplayedCards = [
         new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 3),
