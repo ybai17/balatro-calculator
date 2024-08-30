@@ -598,7 +598,8 @@ test("STEEL + STONE 1 card played, 7 cards in hand HIGH_CARD", () => {
 });
 
 test("STEEL + LUCKY 5 cards played, 3 in hand FLUSH_FIVE", () => {
-    //FLUSH_FIVE with 5 LUCKY cards played, 3 STEEL cards in hand
+    //FLUSH_FIVE with 5 LUCKY cards played, 3 STEEL cards in hand.
+    //2 LUCKY cards should trigger (ID 1 and 2)
 
     let testCards = [
         new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 0),
