@@ -10,12 +10,20 @@ import * as util from "../src/model/Utils";
 //abcd1001efgh
 //abcd1000efgh
 
+//e_lucky0 first value 0.3472295
 //e_lucky1 first value 0.0153865
 //e_lucky2 first value 0.0137015
+//e_lucky3 first value 0.0461084
+//e_lucky4 first value 0.1374326
+//e_lucky5 first value 0.8672560
+//e_lucky6 first value 0.3976924
+//e_lucky7 first value 0.0697531
+//e_lucky8 first value 0.7523544
 
 let print_debug = true;
-let test_string = "e";
+let test_string = "e_lucky8";
 let diff_string = "f";
+
 //let test_string = "abcd_lucky1";
 //let diff_string = "abcd_lucky2";
 
@@ -55,6 +63,8 @@ test("cyrb128 test diff seed", () => {
 });
 
 test("splitmix32 + cyrb128 test same seed", () => {
+    console.log("----------------splitmix32 + cyrb128 same seed----------------");
+
     let seeds = util.cyrb128(test_string);
 
     let result_functions = [];
@@ -87,6 +97,8 @@ test("splitmix32 + cyrb128 test same seed", () => {
 });
 
 test("splitmax32 + cyrb128 test diff seed", () => {
+    console.log("----------------splitmix32 + cyrb128 diff seed----------------");
+
     let seeds = util.cyrb128(test_string);
 
     let result_functions = [];

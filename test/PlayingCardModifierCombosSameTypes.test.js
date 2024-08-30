@@ -9,7 +9,7 @@ import PlayingCard from "../src/model/PlayingCard";
 import checkHandType from "../src/model/HandTypeChecker";
 
 import { EditionTypes, EnhancementTypes, SealTypes, Suits, Ranks } from "../src/model/CardTypes";
-import { HandTypePriorities } from "../src/model/HandTypeDefs";
+import { HandTypePriorities, HandTypeScores } from "../src/model/HandTypeDefs";
 import { PlanetTracker } from "../src/model/PlanetCards/PlanetDefs";
 
 import { test, expect } from "vitest";
@@ -368,8 +368,27 @@ test("MULT + STONE 2 cards HIGH_CARD", () => {
     expect(testMult).toBe(5);
 });
 
-test("MULT + LUCKY", () => {
-    expect(true).toBeFalsy();
+test("MULT + LUCKY 2 cards PAIR", () => {
+    //PAIR with 1 MULT and 1 LUCKY card that triggers
+
+    let testCards = [
+        new PlayingCard(Ranks.SEVEN, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.MULT, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.SEVEN, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.TEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.FOUR, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 4),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "e");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(24);
+    expect(testMult).toBe(26);
 });
 
 test("WILD + GLASS 4 cards FLUSH", () => {
@@ -502,8 +521,27 @@ test("GLASS + STEEL 5 cards played 3 in hand FULL_HOUSE", () => {
 });
 
 //order of cards played matters!
-test("GLASS + LUCKY", () => {
-    expect(true).toBeFalsy();
+test("GLASS + LUCKY 2 cards THREE_OF_A_KIND", () => {
+    //THREE_OF_A_KIND with 1 GLASS and 1 LUCKY card, in that order, then 1 random card
+
+    let testCards = [
+        new PlayingCard(Ranks.TWO, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.SEVEN, Suits.SPADES, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE),
+        new PlayingCard(Ranks.ACE, Suits.DIAMONDS, EditionTypes.NONE, EnhancementTypes.NONE, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.ACE, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.GLASS, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.ACE, Suits.CLUBS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 2),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, [], jokers, tracker, "e");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(testChips).toBe(63);
+    expect(testMult).toBe(26);
 });
 
 //order of cards played matters!
@@ -559,8 +597,34 @@ test("STEEL + STONE 1 card played, 7 cards in hand HIGH_CARD", () => {
     expect(testMult).toBeCloseTo(17.0859, 3);
 });
 
-test("STEEL + LUCKY", () => {
-    expect(true).toBeFalsy();
+test("STEEL + LUCKY 5 cards played, 3 in hand FLUSH_FIVE", () => {
+    //FLUSH_FIVE with 5 LUCKY cards played, 3 STEEL cards in hand
+
+    let testCards = [
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 0),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 1),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 2),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 5),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.LUCKY, SealTypes.NONE, 8),
+    ];
+
+    let unplayedCards = [
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 3),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 4),
+        new PlayingCard(Ranks.QUEEN, Suits.HEARTS, EditionTypes.NONE, EnhancementTypes.STEEL, SealTypes.NONE, 6),
+    ];
+
+    let hand = new PlayedHand(testCards);
+    let jokers = [];
+    let handCheck = checkHandType(hand, jokers);
+    let tracker = new PlanetTracker();
+
+    let testScore = new ScoreObject(handCheck.handType, handCheck.scoringCards, unplayedCards, jokers, tracker, "e");
+    let [testChips, testMult] = testScore.getFinalScoreValues();
+
+    expect(handCheck.handType).toBe(HandTypePriorities.FLUSH_FIVE);
+    expect(testChips).toBe(210);
+    expect(testMult).toBe(189);
 });
 
 test("STONE + LUCKY", () => {
