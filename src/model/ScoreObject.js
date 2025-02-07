@@ -39,7 +39,7 @@ class ScoreObject {
      * @param {Array} unplayedCards the array of unplayed cards in the hand that may have an effect on scoring
      * @param {Array} jokers the array of jokers currently in play
      * @param {PlanetTracker} planetTracker the planet tracker managing the levels of each hand type
-     * @param {String} rngSeedString the seed string for this run, from which other rng-based cards will use
+     * @param {String} rngSeedString the seed string for this run which other rng-based cards will use
      */
     constructor(handType, scoringCards, unplayedCards, jokers, planetTracker, rngSeedString) {
         this.handType = handType;
@@ -106,6 +106,7 @@ class ScoreObject {
                         //vs using predictable pseudo-random outcomes during testing
 
                         let multRoll = Math.floor(this.rngObject.generateLuckyCardRNG(cardCount) * 5);
+                        //let multRoll = Math.floor(this.rngObject.generateLuckyCardRNG(currCard.id));
                         if (multRoll === 0) {
                             this.multiplierField += 20;
                         }
@@ -144,6 +145,24 @@ class ScoreObject {
 
         return [this.chipsField, this.multiplierField];
     }
+}
+
+/**
+ * This class will be the one that handles all the joker effects. 
+ * The ScoreObject class will pass along the necessary information and variables to
+ * a JokerHandler, which will then apply all the effects that impact the scoring.
+ * 
+ * There are a few Joker cards that have other effects, and so they will be handled elsewhere.
+ */
+class JokerHandler {
+
+    /**
+     * 
+     */
+    constructor() {
+        
+    }
+
 }
 
 export default ScoreObject;
